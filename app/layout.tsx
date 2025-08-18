@@ -1,24 +1,27 @@
 import type React from "react"
 import type { Metadata } from "next"
-import { Montserrat, Open_Sans } from "next/font/google"
-import { GeistMono } from "geist/font/mono"
+import { Playfair_Display, Source_Sans_3 } from "next/font/google"
 import "./globals.css"
+import { LifeCoinsProvider } from "@/lib/lifecoins-context"
+import { TasksProvider } from "@/lib/tasks-context"
+import { ReflectionProvider } from "@/lib/reflection-context"
+import { BossBattleProvider } from "@/lib/boss-battle-context"
 
-const montserrat = Montserrat({
+const playfair = Playfair_Display({
   subsets: ["latin"],
-  weight: ["400", "600", "700", "900"],
-  variable: "--font-montserrat",
+  variable: "--font-playfair",
+  display: "swap",
 })
 
-const openSans = Open_Sans({
+const sourceSans = Source_Sans_3({
   subsets: ["latin"],
-  weight: ["400", "500", "600"],
-  variable: "--font-open-sans",
+  variable: "--font-source-sans",
+  display: "swap",
 })
 
 export const metadata: Metadata = {
-  title: "StoryWeave - Interactive Storytelling",
-  description: "Immerse yourself in choice-driven narratives",
+  title: "Lifebook - Level Up Your Real Life",
+  description: "Transform your daily tasks into an epic RPG adventure. Created by Aiza Fatima.",
   generator: "v0.app",
 }
 
@@ -28,18 +31,16 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en" className={`${montserrat.variable} ${openSans.variable} antialiased`}>
-      <head>
-        <style>{`
-html {
-  font-family: ${openSans.style.fontFamily};
-  --font-sans: ${openSans.variable};
-  --font-serif: ${montserrat.variable};
-  --font-mono: ${GeistMono.variable};
-}
-        `}</style>
-      </head>
-      <body className="font-sans">{children}</body>
+    <html lang="en" className={`${playfair.variable} ${sourceSans.variable} antialiased`}>
+      <body className="font-sans">
+        <LifeCoinsProvider>
+          <TasksProvider>
+            <ReflectionProvider>
+              <BossBattleProvider>{children}</BossBattleProvider>
+            </ReflectionProvider>
+          </TasksProvider>
+        </LifeCoinsProvider>
+      </body>
     </html>
   )
 }
