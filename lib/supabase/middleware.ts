@@ -8,7 +8,7 @@ export async function updateSession(request: NextRequest) {
 
   const supabase = createServerClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY!,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
     {
       cookies: {
         getAll() {
@@ -30,18 +30,20 @@ export async function updateSession(request: NextRequest) {
   } = await supabase.auth.getUser()
 
   // Protected routes - redirect to login if not authenticated
-  if (
-    (request.nextUrl.pathname.startsWith("/dashboard") ||
-      request.nextUrl.pathname.startsWith("/tasks") ||
-      request.nextUrl.pathname.startsWith("/map") ||
-      request.nextUrl.pathname.startsWith("/reflection") ||
-      request.nextUrl.pathname.startsWith("/boss-battle") ||
-      request.nextUrl.pathname.startsWith("/social") ||
-      request.nextUrl.pathname.startsWith("/profile")) &&
-    !user
-  ) {
+  const protectedPaths = ["/dashboard", "/tasks", "/map", "/reflection", "/boss-battle", "/social", "/profile"]
+
+  const isProtectedPath = protectedPaths.some((path) => request.nextUrl.pathname.startsWith(path))
+
+  if (isProtectedPath && !user) {
     const url = request.nextUrl.clone()
     url.pathname = "/auth/login"
+    return NextResponse.redirect(url)
+  }
+
+  // Redirect authenticated users away from auth pages
+  if (user && request.nextUrl.pathname.startsWith("/auth/")) {
+    const url = request.nextUrl.clone()
+    url.pathname = "/dashboard"
     return NextResponse.redirect(url)
   }
 
