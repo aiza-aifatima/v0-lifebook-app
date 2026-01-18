@@ -1,37 +1,72 @@
-"use client"
+'use client'
 
-import type React from "react"
-
-import { createClient } from "@/lib/supabase/client"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import Link from "next/link"
-import { useState } from "react"
-import { Sparkles, ArrowLeft, Mail, CheckCircle } from "lucide-react"
+import type React from 'react'
+import { useState } from 'react'
+import { useRouter } from 'next/navigation'
+import { Button } from '@/components/ui/button'
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import { Input } from '@/components/ui/input'
+import { Label } from '@/components/ui/label'
+import Link from 'next/link'
+import { Sparkles, ArrowLeft, Mail, CheckCircle } from 'lucide-react'
+import { requestPasswordResetOTP } from '@/lib/auth/otp-service'
 
 export default function ForgotPasswordPage() {
-  const [email, setEmail] = useState("")
+  const [email, setEmail] = useState('')
   const [error, setError] = useState<string | null>(null)
   const [success, setSuccess] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
+  const router = useRouter()
 
-  const handleResetPassword = async (e: React.FormEvent) => {
+  const handleRequestOTP = async (e: React.FormEvent) => {
     e.preventDefault()
-    const supabase = createClient()
     setIsLoading(true)
     setError(null)
 
     try {
-      const { error } = await supabase.auth.resetPasswordForEmail(email, {
-        redirectTo:
-          process.env.NEXT_PUBLIC_DEV_SUPABASE_REDIRECT_URL || `${window.location.origin}/auth/reset-password`,
-      })
-      if (error) throw error
-      setSuccess(true)
+      console.log('[v0] Requesting OTP for:', email)
+      const result = await requestPasswordResetOTP(email)
+
+      if (result.success) {
+        setSuccess(true)
+        // Redirect to OTP verification page after 2 seconds
+        setTimeout(() => {
+          sessionStorage.setItem('resetEmail', email)
+          router.push('/auth/verify-otp')
+        }, 2000)
+      } else {
+        setError(result.error || 'Failed to send OTP')
+      }
     } catch (error: unknown) {
-      setError(error instanceof Error ? error.message : "An error occurred")
+      console.error('[v0] OTP request error:', error)
+      setError(error instanceof Error ? error.message : 'An error occurred')
+    } finally {
+      setIsLoading(false)
+    }
+  }
+
+  const handleResetPassword = async (e: React.FormEvent) => {
+    e.preventDefault()
+    setIsLoading(true)
+    setError(null)
+
+    try {
+      console.log('[v0] Requesting OTP for:', email)
+      const result = await requestPasswordResetOTP(email)
+
+      if (result.success) {
+        setSuccess(true)
+        // Redirect to OTP verification page after 2 seconds
+        setTimeout(() => {
+          sessionStorage.setItem('resetEmail', email)
+          router.push('/auth/verify-otp')
+        }, 2000)
+      } else {
+        setError(result.error || 'Failed to send OTP')
+      }
+    } catch (error: unknown) {
+      console.error('[v0] OTP request error:', error)
+      setError(error instanceof Error ? error.message : 'An error occurred')
     } finally {
       setIsLoading(false)
     }
@@ -57,47 +92,39 @@ export default function ForgotPasswordPage() {
 
         <Card className="backdrop-blur-sm bg-card/95 shadow-xl border-primary/10">
           <CardHeader className="text-center">
-            <CardTitle className="text-2xl font-serif">{success ? "Check Your Email" : "Forgot Password?"}</CardTitle>
+            <CardTitle className="text-2xl font-serif">
+              {success ? 'OTP Sent Successfully' : 'Forgot Password?'}
+            </CardTitle>
             <CardDescription>
               {success
-                ? "We've sent you a magic link to reset your password"
-                : "No worries! Enter your email and we'll send you a reset link"}
+                ? 'Check your email for a one-time password'
+                : 'Enter your email and we will send you a 6-digit code'}
             </CardDescription>
           </CardHeader>
           <CardContent>
             {success ? (
               <div className="flex flex-col items-center gap-6">
-                <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center">
+                <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center animate-bounce">
                   <CheckCircle className="w-10 h-10 text-green-600" />
                 </div>
                 <div className="text-center space-y-2">
-                  <p className="text-sm text-muted-foreground">We sent a password reset link to:</p>
+                  <p className="text-sm text-muted-foreground">OTP sent to:</p>
                   <p className="font-medium flex items-center justify-center gap-2">
                     <Mail className="w-4 h-4" />
                     {email}
                   </p>
                 </div>
-                <div className="bg-amber-50 border border-amber-200 rounded-lg p-4 text-sm text-amber-800">
-                  <p className="font-medium mb-1">Tips for faster delivery:</p>
+                <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 text-sm text-blue-800">
+                  <p className="font-medium mb-1">OTP Details:</p>
                   <ul className="list-disc list-inside space-y-1 text-xs">
-                    <li>Check your spam/junk folder</li>
-                    <li>Add noreply@supabase.io to contacts</li>
-                    <li>Wait up to 2 minutes for delivery</li>
+                    <li>6-digit code valid for 10 minutes</li>
+                    <li>Check spam/junk folder if needed</li>
+                    <li>You can request a new code anytime</li>
                   </ul>
                 </div>
-                <Button
-                  variant="outline"
-                  className="w-full bg-transparent"
-                  onClick={() => {
-                    setSuccess(false)
-                    setEmail("")
-                  }}
-                >
-                  Try a different email
-                </Button>
               </div>
             ) : (
-              <form onSubmit={handleResetPassword}>
+              <form onSubmit={handleRequestOTP}>
                 <div className="flex flex-col gap-5">
                   <div className="grid gap-2">
                     <Label htmlFor="email">Email Address</Label>
@@ -116,12 +143,18 @@ export default function ForgotPasswordPage() {
                       {error}
                     </div>
                   )}
+                  <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 text-sm text-blue-800">
+                    <p className="font-medium mb-1">Secure OTP Process:</p>
+                    <p className="text-xs">
+                      We will send you a one-time password that expires in 10 minutes for enhanced security.
+                    </p>
+                  </div>
                   <Button
                     type="submit"
                     className="w-full bg-gradient-to-r from-primary to-secondary hover:opacity-90 transition-opacity"
                     disabled={isLoading}
                   >
-                    {isLoading ? "Sending magic link..." : "Send Reset Link"}
+                    {isLoading ? 'Sending OTP...' : 'Send OTP Code'}
                   </Button>
                 </div>
               </form>

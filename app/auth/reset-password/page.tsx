@@ -1,36 +1,39 @@
-"use client"
+'use client'
 
-import type React from "react"
-
-import { createClient } from "@/lib/supabase/client"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { useRouter } from "next/navigation"
-import { useState, useEffect } from "react"
-import { Sparkles, CheckCircle, Eye, EyeOff } from "lucide-react"
-import Link from "next/link"
+import type React from 'react'
+import { Button } from '@/components/ui/button'
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import { Input } from '@/components/ui/input'
+import { Label } from '@/components/ui/label'
+import { useRouter } from 'next/navigation'
+import { useState, useEffect } from 'react'
+import { Sparkles, CheckCircle, Eye, EyeOff, AlertCircle } from 'lucide-react'
+import Link from 'next/link'
+import { resetPasswordWithOTP } from '@/lib/auth/otp-service'
 
 export default function ResetPasswordPage() {
-  const [password, setPassword] = useState("")
-  const [confirmPassword, setConfirmPassword] = useState("")
+  const [password, setPassword] = useState('')
+  const [confirmPassword, setConfirmPassword] = useState('')
   const [error, setError] = useState<string | null>(null)
   const [success, setSuccess] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
   const [showPassword, setShowPassword] = useState(false)
   const [showConfirmPassword, setShowConfirmPassword] = useState(false)
+  const [hasValidOTP, setHasValidOTP] = useState(false)
   const router = useRouter()
 
-  // Check if user has valid session from email link
+  // Check if user has valid OTP from previous step
   useEffect(() => {
-    const supabase = createClient()
-    supabase.auth.onAuthStateChange(async (event) => {
-      if (event === "PASSWORD_RECOVERY") {
-        // User clicked the password recovery link
-      }
-    })
-  }, [])
+    const resetUserId = sessionStorage.getItem('resetUserId')
+    if (!resetUserId) {
+      setError('No valid OTP session. Please start over.')
+      setTimeout(() => {
+        router.push('/auth/forgot-password')
+      }, 3000)
+    } else {
+      setHasValidOTP(true)
+    }
+  }, [router])
 
   const handleResetPassword = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -38,31 +41,44 @@ export default function ResetPasswordPage() {
 
     // Validate passwords match
     if (password !== confirmPassword) {
-      setError("Passwords do not match")
+      setError('Passwords do not match')
       return
     }
 
     // Validate password strength
     if (password.length < 8) {
-      setError("Password must be at least 8 characters long")
+      setError('Password must be at least 8 characters long')
       return
     }
 
-    const supabase = createClient()
     setIsLoading(true)
 
     try {
-      const { error } = await supabase.auth.updateUser({
-        password: password,
-      })
-      if (error) throw error
-      setSuccess(true)
-      // Redirect to login after 3 seconds
-      setTimeout(() => {
-        router.push("/auth/login")
-      }, 3000)
-    } catch (error: unknown) {
-      setError(error instanceof Error ? error.message : "An error occurred")
+      const userId = sessionStorage.getItem('resetUserId')
+      if (!userId) {
+        setError('Session expired. Please try again.')
+        router.push('/auth/forgot-password')
+        return
+      }
+
+      console.log('[v0] Resetting password for user:', userId)
+      const result = await resetPasswordWithOTP(userId, password)
+
+      if (result.success) {
+        setSuccess(true)
+        // Clear session data
+        sessionStorage.removeItem('resetUserId')
+        sessionStorage.removeItem('resetEmail')
+        // Redirect to login after 3 seconds
+        setTimeout(() => {
+          router.push('/auth/login')
+        }, 3000)
+      } else {
+        setError(result.error || 'Failed to reset password')
+      }
+    } catch (err) {
+      console.error('[v0] Password reset error:', err)
+      setError(err instanceof Error ? err.message : 'An error occurred')
     } finally {
       setIsLoading(false)
     }
@@ -89,19 +105,30 @@ export default function ResetPasswordPage() {
         <Card className="backdrop-blur-sm bg-card/95 shadow-xl border-primary/10">
           <CardHeader className="text-center">
             <CardTitle className="text-2xl font-serif">
-              {success ? "Password Updated!" : "Create New Password"}
+              {success ? 'Password Updated!' : 'Create New Password'}
             </CardTitle>
             <CardDescription>
-              {success ? "Your password has been successfully reset" : "Choose a strong password for your account"}
+              {success ? 'Your password has been successfully reset' : 'Choose a strong password for your account'}
             </CardDescription>
           </CardHeader>
           <CardContent>
-            {success ? (
+            {!hasValidOTP && !success ? (
+              <div className="flex flex-col items-center gap-6">
+                <div className="w-20 h-20 bg-amber-100 rounded-full flex items-center justify-center">
+                  <AlertCircle className="w-10 h-10 text-amber-600" />
+                </div>
+                <p className="text-sm text-muted-foreground text-center">
+                  {error || 'Redirecting you back...'}
+                </p>
+              </div>
+            ) : success ? (
               <div className="flex flex-col items-center gap-6">
                 <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center animate-bounce">
                   <CheckCircle className="w-10 h-10 text-green-600" />
                 </div>
-                <p className="text-sm text-muted-foreground text-center">Redirecting you to login...</p>
+                <p className="text-sm text-muted-foreground text-center">
+                  Redirecting you to login...
+                </p>
                 <Link href="/auth/login">
                   <Button className="w-full bg-gradient-to-r from-primary to-secondary hover:opacity-90 transition-opacity">
                     Go to Login Now
@@ -116,7 +143,7 @@ export default function ResetPasswordPage() {
                     <div className="relative">
                       <Input
                         id="password"
-                        type={showPassword ? "text" : "password"}
+                        type={showPassword ? 'text' : 'password'}
                         placeholder="At least 8 characters"
                         required
                         value={password}
@@ -137,7 +164,7 @@ export default function ResetPasswordPage() {
                     <div className="relative">
                       <Input
                         id="confirmPassword"
-                        type={showConfirmPassword ? "text" : "password"}
+                        type={showConfirmPassword ? 'text' : 'password'}
                         placeholder="Confirm your password"
                         required
                         value={confirmPassword}
@@ -157,17 +184,17 @@ export default function ResetPasswordPage() {
                   <div className="space-y-2">
                     <p className="text-xs text-muted-foreground">Password requirements:</p>
                     <ul className="text-xs space-y-1">
-                      <li className={password.length >= 8 ? "text-green-600" : "text-muted-foreground"}>
-                        {password.length >= 8 ? "✓" : "○"} At least 8 characters
+                      <li className={password.length >= 8 ? 'text-green-600' : 'text-muted-foreground'}>
+                        {password.length >= 8 ? '✓' : '○'} At least 8 characters
                       </li>
                       <li
                         className={
                           password === confirmPassword && password.length > 0
-                            ? "text-green-600"
-                            : "text-muted-foreground"
+                            ? 'text-green-600'
+                            : 'text-muted-foreground'
                         }
                       >
-                        {password === confirmPassword && password.length > 0 ? "✓" : "○"} Passwords match
+                        {password === confirmPassword && password.length > 0 ? '✓' : '○'} Passwords match
                       </li>
                     </ul>
                   </div>
@@ -176,12 +203,20 @@ export default function ResetPasswordPage() {
                       {error}
                     </div>
                   )}
+                  <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 text-sm text-blue-800">
+                    <p className="font-medium mb-1">OTP-Verified Reset:</p>
+                    <p className="text-xs">
+                      Your password is being reset securely after OTP verification for maximum account safety.
+                    </p>
+                  </div>
                   <Button
                     type="submit"
                     className="w-full bg-gradient-to-r from-primary to-secondary hover:opacity-90 transition-opacity"
-                    disabled={isLoading || password.length < 8 || password !== confirmPassword}
+                    disabled={
+                      isLoading || password.length < 8 || password !== confirmPassword
+                    }
                   >
-                    {isLoading ? "Updating password..." : "Reset Password"}
+                    {isLoading ? 'Updating password...' : 'Reset Password'}
                   </Button>
                 </div>
               </form>
