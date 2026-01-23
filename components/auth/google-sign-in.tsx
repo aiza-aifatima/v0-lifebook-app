@@ -26,15 +26,15 @@ export function GoogleSignIn({ isLoading = false, variant = 'default', size = 'd
       if (!result.success) {
         console.error('[v0] Google sign-in failed:', result.error)
         setError(result.error || 'Failed to sign in with Google')
+        setLoading(false)
         return
       }
 
-      console.log('[v0] Redirecting to Google OAuth')
-      // Supabase handles the redirect automatically
+      // Supabase will handle the redirect automatically
+      // Component will remain loading until redirect happens
     } catch (err) {
       console.error('[v0] Unexpected error during Google sign-in:', err)
       setError('An unexpected error occurred. Please try again.')
-    } finally {
       setLoading(false)
     }
   }

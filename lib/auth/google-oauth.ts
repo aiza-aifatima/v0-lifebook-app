@@ -1,17 +1,22 @@
 'use server'
 
-import { createClient } from '@/lib/supabase/server'
+import { createClient as createServerClient } from '@/lib/supabase/server'
+import { createClient } from '@/lib/supabase/client' // Import createClient for handleGoogleCallback
 
 export async function signInWithGoogle() {
   try {
     console.log('[v0] Initiating Google OAuth flow')
-    const supabase = createClient()
+    const supabase = createServerClient()
 
-    const { data, error } = await supabase.auth.signInWithOAuth({
+    // Use signInWithOAuth which will handle the redirect
+    const { error } = await supabase.auth.signInWithOAuth({
       provider: 'google',
       options: {
         redirectTo: `${process.env.NEXT_PUBLIC_DEV_SUPABASE_REDIRECT_URL || 'http://localhost:3000'}/auth/callback`,
-        skipBrowserRedirect: false,
+        queryParams: {
+          access_type: 'offline',
+          prompt: 'consent',
+        },
       },
     })
 
@@ -21,12 +26,12 @@ export async function signInWithGoogle() {
     }
 
     console.log('[v0] Google OAuth initiated successfully')
-    return { success: true, url: data?.url }
+    return { success: true }
   } catch (err) {
     console.error('[v0] Unexpected error in Google OAuth:', err)
     return {
       success: false,
-      error: err instanceof Error ? err.message : 'An error occurred',
+      error: err instanceof Error ? err.message : 'An unexpected error occurred',
     }
   }
 }
