@@ -2,10 +2,12 @@ import type React from "react"
 import type { Metadata } from "next"
 import { Playfair_Display, Source_Sans_3 } from "next/font/google"
 import "./globals.css"
-import { LifeCoinsProvider } from "@/lib/lifecoins-context"
-import { TasksProvider } from "@/lib/tasks-context"
-import { ReflectionProvider } from "@/lib/reflection-context"
-import { BossBattleProvider } from "@/lib/boss-battle-context"
+import { Providers } from "@/components/providers"
+import { GuestProvider } from "@/components/GuestProvider"
+import { LifeCoinsProvider } from "@/components/LifeCoinsProvider"
+import { TasksProvider } from "@/components/TasksProvider"
+import { ReflectionProvider } from "@/components/ReflectionProvider"
+import { BossBattleProvider } from "@/components/BossBattleProvider"
 
 const playfair = Playfair_Display({
   subsets: ["latin"],
@@ -33,13 +35,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${playfair.variable} ${sourceSans.variable} antialiased`}>
       <body className="font-sans">
-        <LifeCoinsProvider>
-          <TasksProvider>
-            <ReflectionProvider>
-              <BossBattleProvider>{children}</BossBattleProvider>
-            </ReflectionProvider>
-          </TasksProvider>
-        </LifeCoinsProvider>
+        <Providers>{children}</Providers>
       </body>
     </html>
   )

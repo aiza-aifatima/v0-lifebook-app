@@ -1,34 +1,26 @@
-"use client"
+'use client'
 
-import { useState, useEffect } from "react"
-import { WelcomeScreen } from "@/components/welcome-screen"
-import { LoginScreen } from "@/components/login-screen"
-import { useRouter } from "next/navigation"
+import { useGuest } from '@/lib/guest-context'
+import { GuestWelcome } from '@/components/guest-welcome'
+import { useRouter } from 'next/navigation'
+import { useEffect } from 'react'
 
 export default function Home() {
-  const [showWelcome, setShowWelcome] = useState(true)
+  const { guest } = useGuest()
   const router = useRouter()
 
   useEffect(() => {
-    // Auto-transition to login after 3 seconds
-    const timer = setTimeout(() => {
-      setShowWelcome(false)
-    }, 3000)
+    // If guest already has a session, redirect to dashboard
+    if (guest?.guestName) {
+      router.push('/dashboard')
+    }
+  }, [guest, router])
 
-    return () => clearTimeout(timer)
-  }, [])
-
-  const handleStartJourney = () => {
-    router.push("/dashboard")
+  // Show guest welcome if no session exists
+  if (!guest?.guestName) {
+    return <GuestWelcome />
   }
 
-  return (
-    <main className="min-h-screen">
-      {showWelcome ? (
-        <WelcomeScreen onComplete={() => setShowWelcome(false)} />
-      ) : (
-        <LoginScreen onStartJourney={handleStartJourney} />
-      )}
-    </main>
-  )
+  // This shouldn't be reached due to redirect, but just in case
+  return null
 }
