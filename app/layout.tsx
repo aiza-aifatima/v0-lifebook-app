@@ -6,6 +6,7 @@ import { LifeCoinsProvider } from "@/lib/lifecoins-context"
 import { TasksProvider } from "@/lib/tasks-context"
 import { ReflectionProvider } from "@/lib/reflection-context"
 import { BossBattleProvider } from "@/lib/boss-battle-context"
+import { GuestProvider } from "@/lib/guest-context"
 
 const playfair = Playfair_Display({
   subsets: ["latin"],
@@ -33,13 +34,15 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${playfair.variable} ${sourceSans.variable} antialiased`}>
       <body className="font-sans">
-        <LifeCoinsProvider>
-          <TasksProvider>
-            <ReflectionProvider>
-              <BossBattleProvider>{children}</BossBattleProvider>
-            </ReflectionProvider>
-          </TasksProvider>
-        </LifeCoinsProvider>
+        <GuestProvider>
+          <LifeCoinsProvider>
+            <TasksProvider>
+              <ReflectionProvider>
+                <BossBattleProvider>{children}</BossBattleProvider>
+              </ReflectionProvider>
+            </TasksProvider>
+          </LifeCoinsProvider>
+        </GuestProvider>
       </body>
     </html>
   )
