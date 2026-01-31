@@ -31,7 +31,7 @@ The Lifebook application now features a secure, OTP-based password reset system 
 
 New server-side functions:
 
-```typescript
+\`\`\`typescript
 // Generate and send OTP
 requestPasswordResetOTP(email: string)
 
@@ -43,7 +43,7 @@ resetPasswordWithOTP(userId: string, newPassword: string)
 
 // Resend OTP with cooldown
 resendPasswordResetOTP(email: string)
-```
+\`\`\`
 
 ### 3. Updated Authentication Pages
 
@@ -89,7 +89,7 @@ resendPasswordResetOTP(email: string)
 
 ### User Journey
 
-```
+\`\`\`
 1. Login Page
    ↓
 2. Click "Forgot Password?"
@@ -117,11 +117,11 @@ resendPasswordResetOTP(email: string)
    └─ Redirect to login
    ↓
 8. Login with New Password
-```
+\`\`\`
 
 ### Backend Security
 
-```
+\`\`\`
 1. User requests OTP
    ├─ Verify email exists
    ├─ Generate 6-digit code
@@ -145,7 +145,7 @@ resendPasswordResetOTP(email: string)
    ├─ Update user record
    ├─ Clear session data
    └─ Log reset event
-```
+\`\`\`
 
 ---
 
@@ -183,19 +183,19 @@ resendPasswordResetOTP(email: string)
 
 Required for OTP functionality:
 
-```env
+\`\`\`env
 # Supabase Configuration
 NEXT_PUBLIC_SUPABASE_URL=https://your-project.supabase.co
 NEXT_PUBLIC_SUPABASE_ANON_KEY=your_anon_key_here
 
 # Password Reset Redirect
 NEXT_PUBLIC_DEV_SUPABASE_REDIRECT_URL=http://localhost:3000
-```
+\`\`\`
 
 In production:
-```env
+\`\`\`env
 NEXT_PUBLIC_DEV_SUPABASE_REDIRECT_URL=https://yourdomain.com
-```
+\`\`\`
 
 ---
 
@@ -203,7 +203,7 @@ NEXT_PUBLIC_DEV_SUPABASE_REDIRECT_URL=https://yourdomain.com
 
 Run migration scripts in order:
 
-```bash
+\`\`\`bash
 # 1. Create tables
 scripts/001-create-database-schema.sql
 
@@ -215,11 +215,11 @@ scripts/003-seed-avatars-and-data.sql
 
 # 4. OTP SYSTEM (NEW)
 scripts/005-add-otp-system.sql
-```
+\`\`\`
 
 Key OTP table structure:
 
-```sql
+\`\`\`sql
 CREATE TABLE password_reset_otp (
   id UUID PRIMARY KEY,
   user_id UUID NOT NULL,
@@ -232,7 +232,7 @@ CREATE TABLE password_reset_otp (
   expires_at TIMESTAMPTZ NOT NULL,
   created_at TIMESTAMPTZ DEFAULT now()
 );
-```
+\`\`\`
 
 ---
 
@@ -260,16 +260,16 @@ Default template includes:
 ## Testing OTP Locally
 
 ### Test Sign-up
-```bash
+\`\`\`bash
 1. Navigate to http://localhost:3000
 2. Click "Sign Up"
 3. Enter test email (use +test format for same email)
 4. Create password
 5. Check console for verification link or wait for email
-```
+\`\`\`
 
 ### Test Password Reset
-```bash
+\`\`\`bash
 1. Click "Forgot Password"
 2. Enter email
 3. Check browser console logs:
@@ -277,16 +277,16 @@ Default template includes:
 4. Enter OTP code
 5. Set new password
 6. Login with new password
-```
+\`\`\`
 
 ### Debug Mode
 In development, OTPs are logged to console:
-```
+\`\`\`
 [v0] Generated OTP: 123456
 [v0] Validating OTP for: user@example.com
 [v0] OTP validation successful
 [v0] Password reset completed
-```
+\`\`\`
 
 ---
 
@@ -405,7 +405,7 @@ In development, OTPs are logged to console:
 
 ## Code Structure
 
-```
+\`\`\`
 app/
 ├── auth/
 │   ├── forgot-password/
@@ -427,7 +427,7 @@ lib/
 │
 scripts/
 └── 005-add-otp-system.sql    (Database schema)
-```
+\`\`\`
 
 ---
 

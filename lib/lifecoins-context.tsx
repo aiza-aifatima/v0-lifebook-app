@@ -1,6 +1,6 @@
 "use client"
 
-import { createContext, useContext, useReducer, type ReactNode } from "react"
+import { createContext, useContext, useReducer, useEffect, type ReactNode } from "react"
 
 export interface LifeCoinsTransaction {
   id: string
@@ -133,7 +133,43 @@ const LifeCoinsContext = createContext<{
 } | null>(null)
 
 export function LifeCoinsProvider({ children }: { children: ReactNode }) {
-  const [state, dispatch] = useReducer(lifeCoinsReducer, initialState)
+  // Initialize state from localStorage if available
+  const getInitialState = () => {
+    if (typeof window === 'undefined') return initialState
+    const savedState = localStorage.getItem('lifebook_lifecoins_state')
+    if (savedState) {
+      try {
+        const parsed = JSON.parse(savedState)
+        // Convert timestamps back to Date objects
+        return {
+          ...parsed,
+          lastActivity: parsed.lastActivity ? new Date(parsed.lastActivity) : null,
+          transactions: parsed.transactions.map((t: any) => ({
+            ...t,
+            timestamp: new Date(t.timestamp),
+          })),
+        }
+      } catch (e) {
+        console.log('[v0] Failed to parse lifecoins state')
+        return initialState
+      }
+    }
+    return initialState
+  }
+
+  const [state, dispatch] = useReducer(lifeCoinsReducer, initialState, getInitialState)
+
+  // Persist state to localStorage whenever it changes
+  useEffect(() => {
+    const stateToSave = {
+      ...state,
+      transactions: state.transactions.map(t => ({
+        ...t,
+        timestamp: t.timestamp.toISOString(),
+      })),
+    }
+    localStorage.setItem('lifebook_lifecoins_state', JSON.stringify(stateToSave))
+  }, [state])
 
   const earnCoins = (amount: number, reason: string, category: "task" | "bonus" = "task") => {
     dispatch({ type: "EARN", amount, reason, category })

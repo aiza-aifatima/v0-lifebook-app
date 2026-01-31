@@ -4,7 +4,7 @@
 
 ### Quick Diagnosis Flowchart
 
-```
+\`\`\`
 Error appears?
     ↓
     ├─→ Network error message? → Check internet connection
@@ -13,7 +13,7 @@ Error appears?
     ├─→ Account exists? → Click "Sign in" link
     ├─→ Connection refused? → Server offline or misconfigured
     └─→ Generic error? → See detailed troubleshooting below
-```
+\`\`\`
 
 ## Common Error Scenarios
 
@@ -32,7 +32,7 @@ Error appears?
 - Proxy misconfiguration
 
 **Solutions:**
-```bash
+\`\`\`bash
 # For developers - test network:
 curl https://your-supabase-url.supabase.co/rest/v1/health
 
@@ -42,7 +42,7 @@ curl https://your-supabase-url.supabase.co/rest/v1/health
 3. Restart router
 4. Disable VPN/proxy temporarily
 5. Clear browser cache
-```
+\`\`\`
 
 ### 2. Invalid Credentials Error
 
@@ -58,7 +58,7 @@ curl https://your-supabase-url.supabase.co/rest/v1/health
 - Extra spaces in input
 
 **Solutions:**
-```
+\`\`\`
 For users:
 1. Double-check email spelling
 2. Check CAPS LOCK status
@@ -69,7 +69,7 @@ For users:
 For developers:
 - Check email trimming in validation
 - Ensure password not accidentally modified
-```
+\`\`\`
 
 ### 3. Email Not Confirmed Error
 
@@ -84,7 +84,7 @@ For developers:
 - Email service issue
 
 **Solutions:**
-```
+\`\`\`
 For users:
 1. Check inbox and spam folder
 2. Click verification link
@@ -97,7 +97,7 @@ For developers:
 - Verify email provider configuration
 - Check email service logs
 - Test with test email address
-```
+\`\`\`
 
 ### 4. Account Already Exists Error
 
@@ -111,7 +111,7 @@ For developers:
 - Email previously registered
 
 **Solutions:**
-```
+\`\`\`
 For users:
 1. Click "Sign in" link in error message
 2. Use "Forgot password?" if password unknown
@@ -122,7 +122,7 @@ For developers:
 - Verify database unique constraints
 - Check for duplicate email entries
 - Review account merge policies
-```
+\`\`\`
 
 ### 5. Session Expired Error
 
@@ -137,7 +137,7 @@ For developers:
 - User logged out from another device
 
 **Solutions:**
-```
+\`\`\`
 For users:
 1. Click "Go to login" link
 2. Re-enter credentials
@@ -148,7 +148,7 @@ For developers:
 - Verify session timeout settings
 - Check token refresh logic
 - Ensure middleware refreshing tokens
-```
+\`\`\`
 
 ### 6. Invalid Email Format Error
 
@@ -163,7 +163,7 @@ For developers:
 - Spaces in email
 
 **Solutions:**
-```
+\`\`\`
 Format requirements:
 - Must include @ symbol
 - Must have domain name
@@ -180,7 +180,7 @@ Examples of invalid:
 ✗ johndoe@domain (missing extension)
 ✗ john doe@domain.com (contains space)
 ✗ john@.com (missing domain)
-```
+\`\`\`
 
 ### 7. Weak Password Error
 
@@ -196,7 +196,7 @@ Examples of invalid:
 - Missing special character
 
 **Solutions:**
-```
+\`\`\`
 Password requirements:
 ✓ At least 8 characters
 ✓ One uppercase letter (A-Z)
@@ -211,7 +211,7 @@ Weak passwords:
 ✗ password (no uppercase, number, special char)
 ✗ Pass1! (too short)
 ✗ PASSWORD123! (no lowercase)
-```
+\`\`\`
 
 ### 8. Server Error (500)
 
@@ -226,7 +226,7 @@ Weak passwords:
 - Server misconfiguration
 
 **Solutions:**
-```
+\`\`\`
 For users:
 1. Try again in a few moments
 2. Check Supabase status: status.supabase.io
@@ -244,7 +244,7 @@ For developers:
 Command to test backend:
 curl -H "Authorization: Bearer YOUR_ANON_KEY" \
   https://your-project.supabase.co/rest/v1/health
-```
+\`\`\`
 
 ### 9. Rate Limiting Error
 
@@ -258,7 +258,7 @@ curl -H "Authorization: Bearer YOUR_ANON_KEY" \
 - Brute force protection triggered
 
 **Solutions:**
-```
+\`\`\`
 For users:
 1. Wait 15 minutes
 2. Try again from different location
@@ -274,7 +274,7 @@ Configuration in Supabase:
 Check rate limit status:
 - Monitor Supabase metrics
 - Review failed attempt logs
-```
+\`\`\`
 
 ### 10. CORS Error
 
@@ -288,7 +288,7 @@ Check rate limit status:
 - Missing CORS headers
 
 **Solutions:**
-```
+\`\`\`
 For developers:
 
 1. Check Supabase CORS settings:
@@ -313,33 +313,33 @@ For developers:
 5. Allowed origins for production:
    - https://yourdomain.com
    - https://www.yourdomain.com
-```
+\`\`\`
 
 ## Advanced Debugging
 
 ### Enable Browser Developer Tools
 
-```javascript
+\`\`\`javascript
 // In browser console:
 localStorage.debug = 'supabase:*'
 
 // Then reload page and check console for detailed logs
-```
+\`\`\`
 
 ### Check Network Requests
 
-```
+\`\`\`
 1. Open DevTools (F12)
 2. Go to Network tab
 3. Attempt login/signup
 4. Look for failed requests
 5. Check response headers and body
 6. Note status codes and error messages
-```
+\`\`\`
 
 ### Test API Directly
 
-```bash
+\`\`\`bash
 # Test if Supabase is reachable:
 curl https://your-project.supabase.co/rest/v1/health
 
@@ -349,33 +349,33 @@ curl https://your-project.supabase.co/rest/v1/health
 - Supabase project status
 - Network firewall rules
 - DNS resolution
-```
+\`\`\`
 
 ## Environment Variable Checklist
 
 **Required for authentication:**
 
-```env
+\`\`\`env
 NEXT_PUBLIC_SUPABASE_URL=https://xxxxx.supabase.co
 NEXT_PUBLIC_SUPABASE_ANON_KEY=your_public_key_here
-```
+\`\`\`
 
 **Optional for password recovery:**
 
-```env
+\`\`\`env
 NEXT_PUBLIC_DEV_SUPABASE_REDIRECT_URL=http://localhost:3000
-```
+\`\`\`
 
 **Verification:**
 
-```bash
+\`\`\`bash
 # Check if variables are set:
 echo $NEXT_PUBLIC_SUPABASE_URL
 echo $NEXT_PUBLIC_SUPABASE_ANON_KEY
 
 # For local development, check .env.local file
 cat .env.local
-```
+\`\`\`
 
 ## Support Resources
 

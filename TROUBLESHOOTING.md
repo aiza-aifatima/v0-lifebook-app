@@ -9,7 +9,7 @@
 **Causes & Solutions:**
 
 1. **Port Already in Use**
-   ```bash
+   \`\`\`bash
    # Check what's using port 3000
    lsof -i :3000
    
@@ -18,15 +18,15 @@
    
    # Restart dev server
    npm run dev
-   ```
+   \`\`\`
 
 2. **Dev Server Not Started**
-   ```bash
+   \`\`\`bash
    # Start dev server
    npm run dev
    
    # Wait for message: "✓ Ready in X.Xs"
-   ```
+   \`\`\`
 
 3. **Wrong URL**
    - Check: `http://localhost:3000` (not `https://`)
@@ -42,29 +42,29 @@
 **Causes & Solutions:**
 
 1. **Missing `.env.local` File**
-   ```bash
+   \`\`\`bash
    # Create in project root
    touch .env.local
    
    # Add variables (see ENV_SETUP.md)
-   ```
+   \`\`\`
 
 2. **Wrong Variable Names**
-   ```env
+   \`\`\`env
    # Check variable names are EXACTLY:
    NEXT_PUBLIC_SUPABASE_URL=...
    NEXT_PUBLIC_SUPABASE_ANON_KEY=...
    NEXT_PUBLIC_DEV_SUPABASE_REDIRECT_URL=...
-   ```
+   \`\`\`
 
 3. **Extra Spaces**
-   ```env
+   \`\`\`env
    # WRONG (spaces around =)
    NEXT_PUBLIC_SUPABASE_URL = https://...
    
    # RIGHT (no spaces)
    NEXT_PUBLIC_SUPABASE_URL=https://...
-   ```
+   \`\`\`
 
 4. **Wrong Values Copied**
    - Verify URL format: `https://xxxxx.supabase.co`
@@ -72,20 +72,20 @@
    - Verify anon key is complete (long string)
 
 5. **Restart Required**
-   ```bash
+   \`\`\`bash
    # Stop dev server (Ctrl+C)
    # Then restart
    npm run dev
-   ```
+   \`\`\`
 
 **Verification:**
-```bash
+\`\`\`bash
 # Check .env.local exists
 ls -la .env.local
 
 # Check variables
 cat .env.local
-```
+\`\`\`
 
 ---
 
@@ -112,10 +112,10 @@ cat .env.local
    - Check spam folder for verification
 
 4. **Check Database Connection**
-   ```sql
+   \`\`\`sql
    -- In Supabase SQL Editor
    SELECT COUNT(*) FROM auth.users;
-   ```
+   \`\`\`
 
 ---
 
@@ -171,10 +171,10 @@ cat .env.local
    - Avoid tab switching
 
 3. **Check Session Storage**
-   ```javascript
+   \`\`\`javascript
    // In browser console
    console.log(sessionStorage.getItem('resetUserId'))
-   ```
+   \`\`\`
 
 ---
 
@@ -238,19 +238,19 @@ cat .env.local
    - 60-second cooldown before resend
 
 4. **Database Validation**
-   ```sql
+   \`\`\`sql
    -- Check OTP record exists and is valid
    SELECT * FROM password_reset_otp 
    WHERE email = 'your-email@example.com' 
    ORDER BY created_at DESC LIMIT 1;
-   ```
+   \`\`\`
 
 5. **Clear Browser Cache**
-   ```bash
+   \`\`\`bash
    # Ctrl+Shift+Delete to open cache clear dialog
    # Clear all cookies and cache
    # Reload page
-   ```
+   \`\`\`
 
 ---
 
@@ -271,19 +271,19 @@ cat .env.local
    - No special characters preventing entry
 
 3. **Clear Authentication State**
-   ```javascript
+   \`\`\`javascript
    // In browser console
    sessionStorage.clear()
    localStorage.clear()
-   ```
+   \`\`\`
    Then refresh and try login
 
 4. **Check Database Update**
-   ```sql
+   \`\`\`sql
    -- Verify password was updated
    SELECT email, last_sign_in_at FROM auth.users 
    WHERE email = 'your-email@example.com';
-   ```
+   \`\`\`
 
 ---
 
@@ -324,11 +324,11 @@ cat .env.local
 **Solutions:**
 
 1. **Verify RLS Enabled**
-   ```sql
+   \`\`\`sql
    -- Check which tables have RLS enabled
    SELECT tablename FROM pg_tables 
    WHERE schemaname = 'public';
-   ```
+   \`\`\`
 
 2. **Run RLS Policy Script**
    - Execute `scripts/002-enable-rls-policies.sql`
@@ -362,11 +362,11 @@ cat .env.local
    - Check region selection
 
 3. **Clear Cache**
-   ```bash
+   \`\`\`bash
    # Clear Next.js cache
    rm -rf .next
    npm run dev
-   ```
+   \`\`\`
 
 4. **Check Network Tab**
    - F12 → Network tab
@@ -477,7 +477,7 @@ cat .env.local
 
 **Solutions:**
 
-```bash
+\`\`\`bash
 # Clear cache
 npm cache clean --force
 
@@ -490,7 +490,7 @@ npm install
 
 # If still fails, try
 npm install --legacy-peer-deps
-```
+\`\`\`
 
 ---
 
@@ -506,9 +506,9 @@ npm install --legacy-peer-deps
    - Wait for TypeScript server
 
 2. **Rebuild TypeScript**
-   ```bash
+   \`\`\`bash
    npm run build
-   ```
+   \`\`\`
 
 3. **Check Configuration**
    - Verify `tsconfig.json` exists
@@ -564,7 +564,7 @@ npm install --legacy-peer-deps
 
 If everything is broken, try this:
 
-```bash
+\`\`\`bash
 # Stop dev server (Ctrl+C)
 
 # Clear everything
@@ -581,7 +581,7 @@ npm install
 
 # Restart
 npm run dev
-```
+\`\`\`
 
 If database is corrupted:
 

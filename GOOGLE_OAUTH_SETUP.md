@@ -35,15 +35,15 @@ This guide walks you through setting up Google OAuth authentication for Lifebook
 1. Application type: **Web application**
 2. Name: "Lifebook Web Client"
 3. Authorized JavaScript origins:
-   ```
+   \`\`\`
    http://localhost:3000
    https://your-production-domain.com
-   ```
+   \`\`\`
 4. Authorized redirect URIs:
-   ```
+   \`\`\`
    http://localhost:3000/auth/callback
    https://your-production-domain.com/auth/callback
-   ```
+   \`\`\`
 5. Click "Create"
 6. Copy the **Client ID** and **Client Secret**
 
@@ -61,18 +61,18 @@ This guide walks you through setting up Google OAuth authentication for Lifebook
 ### 2.2 Set Redirect URL in Supabase
 1. Go to "Authentication" → "URL Configuration"
 2. Set "Redirect URL" to:
-   ```
+   \`\`\`
    http://localhost:3000/auth/callback
-   ```
+   \`\`\`
    (Update for production)
 
 ## Step 3: Test the Implementation
 
 ### 3.1 Local Testing
 1. Start your development server:
-   ```bash
+   \`\`\`bash
    npm run dev
-   ```
+   \`\`\`
 
 2. Navigate to one of these pages:
    - Sign Up: `http://localhost:3000/auth/oauth-signup`
@@ -122,22 +122,22 @@ Users can select from multiple Google accounts because:
    - Update "Redirect URL" to your production domain
 
 3. Example for production:
-   ```
+   \`\`\`
    Origin: https://lifebook.com
    Redirect: https://lifebook.com/auth/callback
-   ```
+   \`\`\`
 
 ### 5.2 Environment Variables
 Ensure these are set in production:
-```
+\`\`\`
 NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
 NEXT_PUBLIC_SUPABASE_ANON_KEY=your_anon_key
 NEXT_PUBLIC_DEV_SUPABASE_REDIRECT_URL=https://your-production-domain.com
-```
+\`\`\`
 
 ## User Flow Diagram
 
-```
+\`\`\`
 User taps "Sign in with Google"
                 ↓
     Redirected to Google OAuth screen
@@ -153,11 +153,11 @@ User taps "Sign in with Google"
     User profile created/loaded
                 ↓
     Redirected to /dashboard
-```
+\`\`\`
 
 ## File Structure
 
-```
+\`\`\`
 lib/auth/
 ├── google-oauth.ts          # OAuth server actions
 └── error-handler.ts         # Error handling
@@ -169,7 +169,7 @@ app/auth/
 ├── oauth-signup/page.tsx    # Streamlined signup page
 ├── login/page.tsx           # Login with Google + email option
 └── callback/page.tsx        # OAuth callback handler
-```
+\`\`\`
 
 ## Troubleshooting
 

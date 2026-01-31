@@ -25,11 +25,11 @@
 
 1. Create file: `.env.local` in project root
 2. Paste:
-```env
+\`\`\`env
 NEXT_PUBLIC_SUPABASE_URL=<paste-project-url>
 NEXT_PUBLIC_SUPABASE_ANON_KEY=<paste-anon-key>
 NEXT_PUBLIC_DEV_SUPABASE_REDIRECT_URL=http://localhost:3000
-```
+\`\`\`
 
 ---
 
@@ -49,10 +49,10 @@ NEXT_PUBLIC_DEV_SUPABASE_REDIRECT_URL=http://localhost:3000
 
 ## Step 5: Start App (Instant)
 
-```bash
+\`\`\`bash
 npm install
 npm run dev
-```
+\`\`\`
 
 Visit: **http://localhost:3000** ✅
 

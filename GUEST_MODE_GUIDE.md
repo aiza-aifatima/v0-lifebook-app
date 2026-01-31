@@ -31,7 +31,7 @@ Lifebook now features a **Guest Mode** that allows users to start using the app 
 
 ## User Flow
 
-```
+\`\`\`
 Landing Page (/) 
     ↓
 Guest Welcome Form
@@ -43,7 +43,7 @@ Dashboard Access (Full Features)
 [Optional] Later: Create Account or Sign In
     ↓
 Account Linked with Progress
-```
+\`\`\`
 
 ## Technical Implementation
 
@@ -80,7 +80,7 @@ Account Linked with Progress
 
 ## Guest Context API
 
-```typescript
+\`\`\`typescript
 const { guest, setGuestName, clearGuest } = useGuest()
 
 // guest object structure:
@@ -95,7 +95,7 @@ const { guest, setGuestName, clearGuest } = useGuest()
 
 // clearGuest()
 // Clears the guest session and localStorage
-```
+\`\`\`
 
 ## Data Persistence
 
@@ -169,7 +169,7 @@ When user clicks "Create Account" or "Sign In":
 ## Developer Notes
 
 ### Adding Guest-Only Features
-```typescript
+\`\`\`typescript
 import { useGuest } from '@/lib/guest-context'
 
 function MyComponent() {
@@ -181,10 +181,10 @@ function MyComponent() {
     // Show guest features
   }
 }
-```
+\`\`\`
 
 ### Checking Authentication Status
-```typescript
+\`\`\`typescript
 // Guest not authenticated
 if (!guest?.isAuthenticated) {
   // Show upgrade prompt
@@ -194,16 +194,16 @@ if (!guest?.isAuthenticated) {
 if (guest?.isAuthenticated) {
   // Show account features
 }
-```
+\`\`\`
 
 ### Syncing Guest to Account
-```typescript
+\`\`\`typescript
 // When user creates account:
 1. Save guest ID in user profile metadata
 2. Transfer local progress to database
 3. Link guest history to user account
 4. Clear guest session
-```
+\`\`\`
 
 ## Testing Checklist
 

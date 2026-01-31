@@ -90,18 +90,18 @@ A comprehensive refactor of the Lifebook authentication system focusing on error
 
 ### Real-Time Validation
 
-```
+\`\`\`
 ✓ Email format validation (@ and extension required)
 ✓ Password strength requirements (8+ chars, mixed case, number, special)
 ✓ Username format (3-30 chars, alphanumeric + underscore/hyphen)
 ✓ Password confirmation matching
 ✓ Display name non-empty
 ✓ Form submit disabled until valid
-```
+\`\`\`
 
 ### Accessibility Features
 
-```
+\`\`\`
 ✓ Full ARIA labels and roles
 ✓ Keyboard navigation support
 ✓ Screen reader compatible
@@ -109,11 +109,11 @@ A comprehensive refactor of the Lifebook authentication system focusing on error
 ✓ Touch targets 44px+ (mobile)
 ✓ Semantic HTML structure
 ✓ Form validation hints
-```
+\`\`\`
 
 ### Mobile Optimization
 
-```
+\`\`\`
 ✓ Responsive layout (320px-1920px)
 ✓ Touch-friendly input sizes
 ✓ Correct keyboard types
@@ -121,7 +121,7 @@ A comprehensive refactor of the Lifebook authentication system focusing on error
 ✓ Readable without zoom
 ✓ Fast load times
 ✓ Smooth animations
-```
+\`\`\`
 
 ## User Experience Improvements
 
@@ -169,11 +169,11 @@ A comprehensive refactor of the Lifebook authentication system focusing on error
 
 ## Environment Variables Required
 
-```env
+\`\`\`env
 NEXT_PUBLIC_SUPABASE_URL=https://xxxxx.supabase.co
 NEXT_PUBLIC_SUPABASE_ANON_KEY=your_public_anon_key
 NEXT_PUBLIC_DEV_SUPABASE_REDIRECT_URL=http://localhost:3000
-```
+\`\`\`
 
 ## Debugging Features
 

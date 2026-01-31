@@ -17,7 +17,7 @@ Lifebook is a full-stack gamified life management application featuring OTP-base
 
 ## Step 1: Clone & Install
 
-```bash
+\`\`\`bash
 # Clone the repository
 git clone <your-repo-url>
 cd lifebook
@@ -27,7 +27,7 @@ npm install
 
 # Create environment file
 cp .env.example .env.local  # or manually create it
-```
+\`\`\`
 
 ---
 
@@ -52,11 +52,11 @@ cp .env.example .env.local  # or manually create it
 
 Create `.env.local` in project root:
 
-```env
+\`\`\`env
 NEXT_PUBLIC_SUPABASE_URL=https://your-project.supabase.co
 NEXT_PUBLIC_SUPABASE_ANON_KEY=your_anon_key_here
 NEXT_PUBLIC_DEV_SUPABASE_REDIRECT_URL=http://localhost:3000
-```
+\`\`\`
 
 ---
 
@@ -120,16 +120,16 @@ Check in Supabase → Table Editor. You should see:
 
 ## Step 5: Run Locally
 
-```bash
+\`\`\`bash
 # Start development server
 npm run dev
 
 # Server starts on http://localhost:3000
-```
+\`\`\`
 
 ### Expected Output
 
-```
+\`\`\`
 > next dev
 
   ▲ Next.js 15.0.1
@@ -137,7 +137,7 @@ npm run dev
   - Environments: .env.local
 
 ✓ Ready in 1.2s
-```
+\`\`\`
 
 ### Test the Application
 
@@ -161,7 +161,7 @@ npm run dev
 ### Issue: Cannot reach localhost:3000
 
 **Solution:**
-```bash
+\`\`\`bash
 # Kill any process on port 3000
 # macOS/Linux:
 lsof -ti:3000 | xargs kill -9
@@ -172,7 +172,7 @@ taskkill /PID <PID> /F
 
 # Restart dev server
 npm run dev
-```
+\`\`\`
 
 ### Issue: "Your project's URL and Key are required"
 
@@ -204,21 +204,21 @@ npm run dev
 ### Issue: Port 3000 already in use
 
 **Solution:**
-```bash
+\`\`\`bash
 # Use different port
 npm run dev -- -p 3001
 
 # Access at http://localhost:3001
-```
+\`\`\`
 
 ### Issue: Slow localhost performance
 
 **Solution:**
 1. Clear Next.js cache:
-```bash
+\`\`\`bash
 rm -rf .next
 npm run dev
-```
+\`\`\`
 
 2. Check your internet connection (Supabase API calls)
 3. Use Chrome DevTools to identify slow requests
@@ -270,11 +270,11 @@ npm run dev
 2. Click "New Project"
 3. Import GitHub repository
 4. Configure environment variables:
-   ```
+   \`\`\`
    NEXT_PUBLIC_SUPABASE_URL=https://your-project.supabase.co
    NEXT_PUBLIC_SUPABASE_ANON_KEY=your_anon_key_here
    NEXT_PUBLIC_DEV_SUPABASE_REDIRECT_URL=https://your-domain.com
-   ```
+   \`\`\`
 5. Click Deploy
 6. Update Supabase email redirect URL to production domain
 
@@ -306,7 +306,7 @@ npm run dev
 
 ### Useful Commands
 
-```bash
+\`\`\`bash
 # Start dev server
 npm run dev
 
@@ -321,21 +321,21 @@ npm run lint
 
 # Format code
 npm run format
-```
+\`\`\`
 
 ### Debug OTP System
 
 In `.env.local`, OTPs are logged to console:
-```
+\`\`\`
 [v0] Generated OTP: 123456
-```
+\`\`\`
 
 Use this for testing without waiting for email delivery.
 
 ### Database Queries
 
 Test in Supabase SQL Editor:
-```sql
+\`\`\`sql
 -- Check OTP attempts
 SELECT email, otp_code, attempts, expires_at 
 FROM password_reset_otp 
@@ -345,7 +345,7 @@ LIMIT 1;
 
 -- View user profiles
 SELECT id, username, level, lifecoins, streak_count FROM profiles;
-```
+\`\`\`
 
 ---
 

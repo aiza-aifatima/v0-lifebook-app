@@ -5,10 +5,10 @@
 ### `npm run dev`
 Starts the Next.js development server on port 3000 with hot reload.
 
-```bash
+\`\`\`bash
 npm run dev
 # Server starts at: http://localhost:3000
-```
+\`\`\`
 
 **What happens:**
 - Watches for file changes
@@ -19,77 +19,77 @@ npm run dev
 ### `npm run dev -- -p 3001`
 Start on a different port if 3000 is busy.
 
-```bash
+\`\`\`bash
 npm run dev -- -p 3001
 # Server starts at: http://localhost:3001
-```
+\`\`\`
 
 ## Build & Production
 
 ### `npm run build`
 Creates an optimized production build.
 
-```bash
+\`\`\`bash
 npm run build
 # Creates .next folder with optimized code
-```
+\`\`\`
 
 ### `npm start`
 Runs the production server (requires `npm run build` first).
 
-```bash
+\`\`\`bash
 npm run build
 npm start
 # Serves optimized production build
-```
+\`\`\`
 
 ## Quality Assurance
 
 ### `npm run lint`
 Runs ESLint to check code quality.
 
-```bash
+\`\`\`bash
 npm run lint
 # Shows all linting issues
-```
+\`\`\`
 
 ### `npm run lint -- --fix`
 Auto-fixes common linting issues.
 
-```bash
+\`\`\`bash
 npm run lint -- --fix
 # Auto-fixes formatting, imports, etc.
-```
+\`\`\`
 
 ## Diagnostics
 
 ### `npm run diagnose` (Custom Script)
 Checks your development environment setup.
 
-```bash
+\`\`\`bash
 npm run diagnose
 # Verifies:
 # - Node.js and npm versions
 # - Environment variables
 # - Port availability
 # - Required files
-```
+\`\`\`
 
 **Add this to package.json:**
-```json
+\`\`\`json
 {
   "scripts": {
     "diagnose": "node scripts/diagnose.js"
   }
 }
-```
+\`\`\`
 
 ## Database
 
 ### Database Migrations
 Apply SQL scripts in order:
 
-```bash
+\`\`\`bash
 # 1. Schema setup
 psql -U postgres -d lifebook -f scripts/001-create-database-schema.sql
 
@@ -104,7 +104,7 @@ psql -U postgres -d lifebook -f scripts/004-add-helper-functions.sql
 
 # 5. OTP system
 psql -U postgres -d lifebook -f scripts/005-add-otp-system.sql
-```
+\`\`\`
 
 **Or use Supabase SQL editor:**
 1. Go to Supabase Dashboard
@@ -116,149 +116,149 @@ psql -U postgres -d lifebook -f scripts/005-add-otp-system.sql
 ### Enable Debug Logging
 Add to your terminal:
 
-```bash
+\`\`\`bash
 DEBUG=* npm run dev
-```
+\`\`\`
 
 This shows all internal Next.js debug information.
 
 ### TypeScript Type Checking
-```bash
+\`\`\`bash
 npx tsc --noEmit
 # Checks TypeScript without building
-```
+\`\`\`
 
 ### Check Build Size
-```bash
+\`\`\`bash
 npm run build -- --analyze
 # Shows bundle size breakdown
-```
+\`\`\`
 
 ## Cleanup
 
 ### Clear Cache
-```bash
+\`\`\`bash
 rm -rf .next node_modules package-lock.json
 npm install
 npm run dev
-```
+\`\`\`
 
 ### Kill Development Server
-```bash
+\`\`\`bash
 # Mac/Linux:
 lsof -ti:3000 | xargs kill -9
 
 # Windows (PowerShell as Admin):
 netstat -ano | findstr :3000
 taskkill /PID <PID> /F
-```
+\`\`\`
 
 ## Environment Variables
 
 ### Set for Development Only
-```bash
+\`\`\`bash
 # Add to .env.local (not committed to git)
 NEXT_PUBLIC_SUPABASE_URL=https://your-project.supabase.co
 NEXT_PUBLIC_SUPABASE_ANON_KEY=your-key
 NEXT_PUBLIC_DEV_SUPABASE_REDIRECT_URL=http://localhost:3000
-```
+\`\`\`
 
 ### Set for All Environments
-```bash
+\`\`\`bash
 # Add to .env (committed to git, public values only)
 NEXT_PUBLIC_APP_NAME=Lifebook
-```
+\`\`\`
 
 ### Set for Production Only
-```bash
+\`\`\`bash
 # Add to production deployment settings
 SUPABASE_SERVICE_ROLE_KEY=your-secret-key
-```
+\`\`\`
 
 ## Git Workflows
 
 ### Commit Code
-```bash
+\`\`\`bash
 git add .
 git commit -m "feat: add OTP password reset system"
 git push origin main
-```
+\`\`\`
 
 ### View Changes
-```bash
+\`\`\`bash
 git status
 git diff
-```
+\`\`\`
 
 ## Docker (Optional)
 
 ### Build Docker Image
-```bash
+\`\`\`bash
 docker build -t lifebook .
-```
+\`\`\`
 
 ### Run Docker Container
-```bash
+\`\`\`bash
 docker run -p 3000:3000 lifebook
-```
+\`\`\`
 
 ## Vercel Deployment
 
 ### Install Vercel CLI
-```bash
+\`\`\`bash
 npm install -g vercel
-```
+\`\`\`
 
 ### Deploy
-```bash
+\`\`\`bash
 vercel
 # Follow prompts to connect and deploy
-```
+\`\`\`
 
 ### View Logs
-```bash
+\`\`\`bash
 vercel logs
-```
+\`\`\`
 
 ## Monitoring
 
 ### Check Memory Usage
-```bash
+\`\`\`bash
 npm run dev
 # Look at top of output for memory info
-```
+\`\`\`
 
 ### Profile Performance
-```bash
+\`\`\`bash
 node --prof node_modules/.bin/next dev
 # Generates v8 profile for analysis
-```
+\`\`\`
 
 ## Tips & Tricks
 
 ### Fast Rebuild on Big Changes
-```bash
+\`\`\`bash
 rm -rf .next && npm run dev
-```
+\`\`\`
 
 ### Run Multiple Instances
-```bash
+\`\`\`bash
 # Terminal 1:
 npm run dev -- -p 3000
 
 # Terminal 2:
 npm run dev -- -p 3001
-```
+\`\`\`
 
 ### Test Production Build Locally
-```bash
+\`\`\`bash
 npm run build
 npm start
 # Now at http://localhost:3000 with production code
-```
+\`\`\`
 
 ### Monitor File Changes
-```bash
+\`\`\`bash
 npm run dev
 # Edit a file and see instant updates
-```
+\`\`\`

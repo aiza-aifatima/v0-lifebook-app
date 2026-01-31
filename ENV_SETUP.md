@@ -8,14 +8,14 @@ This document outlines the necessary environment variables for the Lifebook appl
 
 The application requires the following Supabase environment variables:
 
-```env
+\`\`\`env
 # These are PUBLIC variables (safe to expose in browser)
 NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
 NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
 
 # Development redirect URL (for password reset emails)
 NEXT_PUBLIC_DEV_SUPABASE_REDIRECT_URL=http://localhost:3000
-```
+\`\`\`
 
 ### Getting Your Supabase Credentials
 
@@ -28,29 +28,29 @@ NEXT_PUBLIC_DEV_SUPABASE_REDIRECT_URL=http://localhost:3000
 
 1. **Create a `.env.local` file in the project root:**
 
-```bash
+\`\`\`bash
 touch .env.local
-```
+\`\`\`
 
 2. **Add your Supabase credentials:**
 
-```env
+\`\`\`env
 NEXT_PUBLIC_SUPABASE_URL=https://your-project-id.supabase.co
 NEXT_PUBLIC_SUPABASE_ANON_KEY=your_anon_key_here
 NEXT_PUBLIC_DEV_SUPABASE_REDIRECT_URL=http://localhost:3000
-```
+\`\`\`
 
 3. **Start the development server:**
 
-```bash
+\`\`\`bash
 npm run dev
-```
+\`\`\`
 
 4. **Access the application:**
 
-```
+\`\`\`
 http://localhost:3000
-```
+\`\`\`
 
 ### Production Deployment
 
@@ -74,7 +74,7 @@ For Vercel or other hosting platforms:
 
 Run the migration scripts in order:
 
-```bash
+\`\`\`bash
 # 1. Create main schema
 scripts/001-create-database-schema.sql
 
@@ -86,7 +86,7 @@ scripts/003-seed-avatars-and-data.sql
 
 # 4. Add OTP system (for password reset)
 scripts/005-add-otp-system.sql
-```
+\`\`\`
 
 ### Email Configuration (OTP Delivery)
 

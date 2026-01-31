@@ -10,30 +10,30 @@ All `export function` declarations in `lib/auth/otp-service.ts` have been verifi
 ### Verified Async Functions (All Compliant)
 
 #### 1. `generateOTP()` - Line 8
-```typescript
+\`\`\`typescript
 export async function generateOTP(): Promise<string>
-```
+\`\`\`
 **Status:** ✅ ASYNC  
 **Return Type:** `Promise<string>`  
 **Usage:** Internal utility function for cryptographically secure 6-digit OTP generation.
 
 #### 2. `hashOTP()` - Line 15
-```typescript
+\`\`\`typescript
 export async function hashOTP(otp: string): Promise<string>
-```
+\`\`\`
 **Status:** ✅ ASYNC  
 **Return Type:** `Promise<string>`  
 **Usage:** Hashes OTP using SHA-256 before database storage.
 
 #### 3. `requestPasswordResetOTP()` - Line 22
-```typescript
+\`\`\`typescript
 export async function requestPasswordResetOTP(email: string): Promise<{
   success: boolean
   error?: string
   message?: string
   maskedEmail?: string
 }>
-```
+\`\`\`
 **Status:** ✅ ASYNC  
 **Return Type:** Explicit Promise with object structure  
 **Internal Awaits:** 
@@ -45,7 +45,7 @@ export async function requestPasswordResetOTP(email: string): Promise<{
 - `maskEmail()` - awaited ✅
 
 #### 4. `validatePasswordResetOTP()` - Line 122
-```typescript
+\`\`\`typescript
 export async function validatePasswordResetOTP(
   email: string,
   otp: string
@@ -55,14 +55,14 @@ export async function validatePasswordResetOTP(
   userId?: string
   message?: string
 }>
-```
+\`\`\`
 **Status:** ✅ ASYNC  
 **Return Type:** Explicit Promise with object structure  
 **Internal Awaits:**
 - `supabase.rpc()` - awaited ✅
 
 #### 5. `resetPasswordWithOTP()` - Line 172
-```typescript
+\`\`\`typescript
 export async function resetPasswordWithOTP(
   userId: string,
   newPassword: string
@@ -71,29 +71,29 @@ export async function resetPasswordWithOTP(
   error?: string
   message?: string
 }>
-```
+\`\`\`
 **Status:** ✅ ASYNC  
 **Return Type:** Explicit Promise with object structure  
 **Internal Awaits:**
 - `supabase.auth.admin.updateUserById()` - awaited ✅
 
 #### 6. `maskEmail()` - Line 211
-```typescript
+\`\`\`typescript
 async function maskEmail(email: string): Promise<string>
-```
+\`\`\`
 **Status:** ✅ ASYNC (Private helper)  
 **Return Type:** `Promise<string>`  
 **Usage:** Email masking for privacy in OTP response.
 
 #### 7. `resendPasswordResetOTP()` - Line 220
-```typescript
+\`\`\`typescript
 export async function resendPasswordResetOTP(email: string): Promise<{
   success: boolean
   error?: string
   message?: string
   maskedEmail?: string
 }>
-```
+\`\`\`
 **Status:** ✅ ASYNC  
 **Return Type:** Explicit Promise with object structure  
 **Internal Awaits:**
@@ -107,18 +107,18 @@ export async function resendPasswordResetOTP(email: string): Promise<{
 ### File 1: `app/auth/forgot-password/page.tsx`
 
 **Import Statement:** ✅
-```typescript
+\`\`\`typescript
 import { requestPasswordResetOTP } from '@/lib/auth/otp-service'
-```
+\`\`\`
 
 **Handler Function:** `handleRequestOTP` - Line 23
-```typescript
+\`\`\`typescript
 const handleRequestOTP = async (e: React.FormEvent) => {
   // ...
   const result = await requestPasswordResetOTP(email)  // ✅ AWAITED
   // ...
 }
-```
+\`\`\`
 **Status:** ✅ COMPLIANT
 
 ---
@@ -126,20 +126,20 @@ const handleRequestOTP = async (e: React.FormEvent) => {
 ### File 2: `app/auth/verify-otp/page.tsx`
 
 **Import Statement:** ✅
-```typescript
+\`\`\`typescript
 import { validatePasswordResetOTP, resendPasswordResetOTP } from '@/lib/auth/otp-service'
-```
+\`\`\`
 
 **Handler Function 1:** `handleVerifyOTP` - Line 61
-```typescript
+\`\`\`typescript
 const result = await validatePasswordResetOTP(email, otpCode)  // ✅ AWAITED
-```
+\`\`\`
 **Status:** ✅ COMPLIANT
 
 **Handler Function 2:** `handleResendOTP` - Line 93
-```typescript
+\`\`\`typescript
 const result = await resendPasswordResetOTP(email)  // ✅ AWAITED
-```
+\`\`\`
 **Status:** ✅ COMPLIANT
 
 ---
@@ -147,14 +147,14 @@ const result = await resendPasswordResetOTP(email)  // ✅ AWAITED
 ### File 3: `app/auth/reset-password/page.tsx`
 
 **Import Statement:** ✅
-```typescript
+\`\`\`typescript
 import { resetPasswordWithOTP } from '@/lib/auth/otp-service'
-```
+\`\`\`
 
 **Handler Function:** `handleResetPassword` - Line 43
-```typescript
+\`\`\`typescript
 const result = await resetPasswordWithOTP(userId, password)  // ✅ AWAITED
-```
+\`\`\`
 **Status:** ✅ COMPLIANT
 
 ---

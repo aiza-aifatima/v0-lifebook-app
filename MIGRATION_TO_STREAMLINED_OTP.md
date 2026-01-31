@@ -28,25 +28,25 @@ Find all references to `/auth/forgot-password` and replace with `/auth/password-
 - Marketing materials
 
 **Search Command:**
-```bash
+\`\`\`bash
 grep -r "forgot-password" --include="*.tsx" --include="*.ts" --include="*.md"
-```
+\`\`\`
 
 ### 2. Update Environment Variables (if needed)
 
 Ensure these are set in your `.env.local`:
 
-```env
+\`\`\`env
 NEXT_PUBLIC_SUPABASE_URL=your_url_here
 NEXT_PUBLIC_SUPABASE_ANON_KEY=your_key_here
 NEXT_PUBLIC_DEV_SUPABASE_REDIRECT_URL=http://localhost:3000
-```
+\`\`\`
 
 ### 3. Verify Database Schema
 
 Ensure the `password_reset_otp` table exists with correct structure:
 
-```sql
+\`\`\`sql
 CREATE TABLE IF NOT EXISTS password_reset_otp (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   user_id UUID NOT NULL REFERENCES auth.users(id),
@@ -59,12 +59,12 @@ CREATE TABLE IF NOT EXISTS password_reset_otp (
   created_at TIMESTAMP WITH TIME ZONE DEFAULT now(),
   updated_at TIMESTAMP WITH TIME ZONE DEFAULT now()
 );
-```
+\`\`\`
 
 Run migration script if needed:
-```bash
+\`\`\`bash
 npm run migrate:005-add-otp-system
-```
+\`\`\`
 
 ### 4. Test the New Flow
 
@@ -110,15 +110,15 @@ If fully migrated, you can remove:
 
 ### Customize OTP Expiration
 File: `lib/auth/otp-service.ts`
-```typescript
+\`\`\`typescript
 const expiresAt = new Date(Date.now() + 15 * 60 * 1000) // Change 10 to 15 for 15 minutes
-```
+\`\`\`
 
 ### Customize Resend Cooldown
 File: `app/auth/password-recovery/page.tsx`
-```typescript
+\`\`\`typescript
 setResendTimer(120) // Change 60 to 120 for 2-minute cooldown
-```
+\`\`\`
 
 ### Customize Auto-Submit Delay
 The form auto-submits immediately when 6 digits are entered (no delay).
@@ -158,9 +158,9 @@ Change `/auth/password-recovery` back to `/auth/forgot-password` in `app/auth/lo
 
 ### Step 2: Restore Old Pages (if deleted)
 Restore from git history:
-```bash
+\`\`\`bash
 git restore app/auth/forgot-password/page.tsx app/auth/verify-otp/page.tsx
-```
+\`\`\`
 
 ### Step 3: Verify
 Test the old flow works correctly

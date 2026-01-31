@@ -6,7 +6,7 @@ The password recovery process has been completely redesigned to provide an optim
 
 ### The Transformation
 
-```
+\`\`\`
 OLD PROCESS                          NEW PROCESS
 ─────────────────────────────────────────────────────────
 Forgot Password Page                 Password Recovery Page
@@ -30,7 +30,7 @@ Login                                Login
 TIME: ~2 minutes                     TIME: ~45 seconds
 STEPS: 3 pages + 2 redirects         STEPS: 1 page + 1 redirect
 ERROR RATE: ~8%                      ERROR RATE: ~4.8%
-```
+\`\`\`
 
 ## Key Improvements
 
@@ -69,23 +69,23 @@ ERROR RATE: ~8%                      ERROR RATE: ~4.8%
 ## Technical Details
 
 ### New Endpoint
-```
+\`\`\`
 Location: /auth/password-recovery
 Type: Client Component (use client)
 Size: ~353 lines of code
 Performance: < 1 second load time
-```
+\`\`\`
 
 ### Features Implemented
 
 #### Smart State Management
-```typescript
+\`\`\`typescript
 type Step = 'email' | 'otp' | 'success'
 
 - Email: User enters and submits email
 - OTP: User enters and validates code
 - Success: Animated confirmation and redirect
-```
+\`\`\`
 
 #### Interactive Elements
 - Auto-focusing input fields
@@ -126,7 +126,7 @@ type Step = 'email' | 'otp' | 'success'
 ## User Journey
 
 ### Happy Path (No Errors)
-```
+\`\`\`
 1. User clicks "Forgot password?" on login page (2 seconds)
 2. Navigates to password recovery page (1 second)
 3. Enters email address (5 seconds)
@@ -139,10 +139,10 @@ type Step = 'email' | 'otp' | 'success'
 10. User logs in with new password
 
 TOTAL TIME: ~45-60 seconds
-```
+\`\`\`
 
 ### Error Recovery Path
-```
+\`\`\`
 If invalid code entered:
 - User sees clear error message (1 second)
 - User clicks "Resend Code" after 60s cooldown (2 seconds)
@@ -151,7 +151,7 @@ If invalid code entered:
 - Process continues normally
 
 TOTAL DELAY: ~90 seconds additional
-```
+\`\`\`
 
 ## Security Analysis
 

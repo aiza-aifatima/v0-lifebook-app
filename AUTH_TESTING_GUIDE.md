@@ -21,7 +21,7 @@ Comprehensive testing procedures for the improved login and sign-up authenticati
 ### 1. Login Functionality
 
 #### Scenario 1.1: Valid Credentials
-```
+\`\`\`
 Steps:
 1. Navigate to /auth/login
 2. Enter valid email
@@ -33,10 +33,10 @@ Expected:
 ✓ Redirects to /dashboard
 ✓ User session created
 ✓ No error messages
-```
+\`\`\`
 
 #### Scenario 1.2: Invalid Email
-```
+\`\`\`
 Steps:
 1. Navigate to /auth/login
 2. Enter invalid email format (no @)
@@ -46,10 +46,10 @@ Expected:
 ✓ Error text: "Please enter a valid email address"
 ✓ Submit button disabled
 ✓ Red border on input
-```
+\`\`\`
 
 #### Scenario 1.3: Invalid Password
-```
+\`\`\`
 Steps:
 1. Enter valid email
 2. Enter wrong password
@@ -59,10 +59,10 @@ Expected:
 ✓ Error shown: "The email or password you entered is incorrect"
 ✓ Form remains editable
 ✓ User can retry
-```
+\`\`\`
 
 #### Scenario 1.4: Missing Email
-```
+\`\`\`
 Steps:
 1. Leave email empty
 2. Enter password
@@ -71,10 +71,10 @@ Steps:
 Expected:
 ✓ Error: "Email is required"
 ✓ Submit blocked until email entered
-```
+\`\`\`
 
 #### Scenario 1.5: Network Error
-```
+\`\`\`
 Steps:
 1. Turn off internet connection
 2. Attempt login
@@ -84,12 +84,12 @@ Expected:
 ✓ Error: "Please check your internet connection"
 ✓ Retry mechanism available
 ✓ No generic error shown
-```
+\`\`\`
 
 ### 2. Sign-Up Functionality
 
 #### Scenario 2.1: Valid Registration
-```
+\`\`\`
 Steps:
 1. Navigate to /auth/sign-up
 2. Enter display name: "John Doe"
@@ -104,10 +104,10 @@ Expected:
 ✓ Verification email sent
 ✓ Redirect to /auth/sign-up-success
 ✓ No errors shown
-```
+\`\`\`
 
 #### Scenario 2.2: Weak Password
-```
+\`\`\`
 Steps:
 1. Fill form with valid data
 2. Enter password: "Pass1!"
@@ -118,10 +118,10 @@ Expected:
 ✓ Real-time feedback as user types
 ✓ Submit button disabled
 ✓ Requirements gradually checked off
-```
+\`\`\`
 
 #### Scenario 2.3: Mismatched Passwords
-```
+\`\`\`
 Steps:
 1. Enter password: "SecurePass123!"
 2. Enter confirmation: "SecurePass124!"
@@ -131,10 +131,10 @@ Expected:
 ✓ Red indicator on confirm field
 ✓ Submit button disabled
 ✓ Error clears when they match
-```
+\`\`\`
 
 #### Scenario 2.4: Invalid Username
-```
+\`\`\`
 Steps:
 1. Enter username: "ab" (too short)
 
@@ -148,10 +148,10 @@ Steps:
 Expected:
 ✓ Error: "Only letters, numbers, underscores, and hyphens allowed"
 ✓ Submit disabled
-```
+\`\`\`
 
 #### Scenario 2.5: Duplicate Email
-```
+\`\`\`
 Steps:
 1. Use email of existing account
 2. Fill other fields validly
@@ -161,10 +161,10 @@ Expected:
 ✓ Error: "This email is already registered"
 ✓ Action link: "Go to login"
 ✓ Clicking link navigates to login page
-```
+\`\`\`
 
 #### Scenario 2.6: Invalid Email Format
-```
+\`\`\`
 Steps:
 1. Enter email: "invalidemail"
 2. Watch validation
@@ -173,22 +173,22 @@ Expected:
 ✓ Real-time error: "Invalid email format"
 ✓ Submit button disabled
 ✓ Error clears when valid email entered
-```
+\`\`\`
 
 ### 3. Real-Time Validation
 
 #### Scenario 3.1: Email Validation While Typing
-```
+\`\`\`
 Input sequence: "john@exam" 
 Expected at each step:
 - "jo" → No error (incomplete)
 - "john@" → No error (incomplete)
 - "john@exam" → Error appears
 - "john@example.com" → Error clears
-```
+\`\`\`
 
 #### Scenario 3.2: Password Requirements Checklist
-```
+\`\`\`
 Start with empty password
 Type: "p"
 Show requirements: All unchecked
@@ -203,19 +203,19 @@ Show requirements:
 
 Type: "Password1!"
 Show requirements: All checked
-```
+\`\`\`
 
 #### Scenario 3.3: Username Auto-Formatting
-```
+\`\`\`
 Type: "John Doe 123"
 Expected in field: "john_doe_123"
 (Auto-lowercase, spaces to underscores)
-```
+\`\`\`
 
 ### 4. Error Recovery
 
 #### Scenario 4.1: After Network Error
-```
+\`\`\`
 Steps:
 1. Attempt login while offline
 2. Get network error
@@ -226,10 +226,10 @@ Expected:
 ✓ Retry succeeds
 ✓ Redirect to dashboard
 ✓ No session issues
-```
+\`\`\`
 
 #### Scenario 4.2: Multiple Failed Attempts
-```
+\`\`\`
 Steps:
 1. Enter wrong password 5 times
 2. Attempt 6th time
@@ -238,10 +238,10 @@ Expected:
 ✓ Rate limit message appears
 ✓ Wait period indicated
 ✓ Can retry after wait
-```
+\`\`\`
 
 #### Scenario 4.3: Form Submission During Network Issue
-```
+\`\`\`
 Steps:
 1. Start login with valid credentials
 2. Network cuts out mid-request
@@ -252,12 +252,12 @@ Expected:
 ✓ Loading indicator stops
 ✓ Form remains editable
 ✓ Can retry
-```
+\`\`\`
 
 ### 5. Accessibility Testing
 
 #### Scenario 5.1: Keyboard Navigation
-```
+\`\`\`
 Steps:
 1. Tab through all form fields
 2. Verify logical tab order
@@ -266,10 +266,10 @@ Expected:
 ✓ Tab order: Email → Password → Submit → Link
 ✓ All interactive elements focusable
 ✓ Focus visible (outline/highlight)
-```
+\`\`\`
 
 #### Scenario 5.2: Screen Reader Testing
-```
+\`\`\`
 Steps:
 1. Open with screen reader (NVDA/JAWS)
 2. Navigate form
@@ -279,10 +279,10 @@ Expected:
 ✓ Error messages announced
 ✓ Form type (login/signup) clear
 ✓ Button purpose clear
-```
+\`\`\`
 
 #### Scenario 5.3: Color Contrast
-```
+\`\`\`
 Steps:
 1. Use contrast checker tool
 2. Check all text colors
@@ -291,12 +291,12 @@ Expected:
 ✓ Error text: WCAG AA compliant (4.5:1)
 ✓ Form labels: WCAG AA compliant
 ✓ Success indicators: Not color-only
-```
+\`\`\`
 
 ### 6. Mobile Testing
 
 #### Scenario 6.1: Responsive Layout
-```
+\`\`\`
 Screen sizes to test:
 - 320px (small phone)
 - 375px (iPhone SE)
@@ -308,10 +308,10 @@ Expected:
 ✓ No horizontal scroll
 ✓ Touch targets 44px+ height
 ✓ Text readable (no zoom needed)
-```
+\`\`\`
 
 #### Scenario 6.2: Mobile Keyboard
-```
+\`\`\`
 Steps:
 1. Open on mobile device
 2. Click email field
@@ -325,10 +325,10 @@ Expected:
 Expected:
 ✓ Password keyboard (not email)
 ✓ Dots shown instead of characters
-```
+\`\`\`
 
 #### Scenario 6.3: Mobile Autocomplete
-```
+\`\`\`
 Steps:
 1. Open on mobile
 2. Click email field with previous auto-fill
@@ -337,7 +337,7 @@ Expected:
 ✓ Autofill suggestions shown
 ✓ Can select to auto-fill
 ✓ All fields fill correctly
-```
+\`\`\`
 
 ## Regression Testing Checklist
 
@@ -362,47 +362,47 @@ Before each release, verify:
 ## Performance Testing
 
 ### Load Testing
-```
+\`\`\`
 Test: 100 simultaneous logins
 Tools: LoadRunner, JMeter
 Expected:
 ✓ 95th percentile response < 2s
 ✓ No dropped connections
 ✓ Error rate < 0.1%
-```
+\`\`\`
 
 ### Form Input Lag
-```
+\`\`\`
 Test: Rapid typing in password field
 Expected:
 ✓ Real-time validation < 100ms delay
 ✓ No freezing
 ✓ Smooth requirement checkbox updates
-```
+\`\`\`
 
 ## Security Testing
 
 ### SQL Injection
-```
+\`\`\`
 Email field:
 Input: admin' OR '1'='1
 Expected: ✓ Treated as literal string
-```
+\`\`\`
 
 ### XSS Testing
-```
+\`\`\`
 Username field:
 Input: <script>alert('xss')</script>
 Expected: ✓ Escaped as text, no script execution
-```
+\`\`\`
 
 ### CSRF Protection
-```
+\`\`\`
 Expected:
 ✓ Form token validated
 ✓ Cross-origin requests rejected
 ✓ No unauthorized state changes
-```
+\`\`\`
 
 ## Browser Testing Matrix
 
@@ -419,17 +419,17 @@ Expected:
 
 ### Valid Test Accounts
 
-```
+\`\`\`
 Email: test.user@example.com
 Password: TestPassword123!
 
 Email: admin@example.com
 Password: AdminPass123!
-```
+\`\`\`
 
 ### Test Scenarios Data
 
-```
+\`\`\`
 Weak passwords:
 - password (no uppercase/number/special)
 - Pass1 (too short)
@@ -449,11 +449,11 @@ Invalid usernames:
 - ab (too short)
 - user@name (invalid character)
 - user name (space not allowed)
-```
+\`\`\`
 
 ## Test Report Template
 
-```
+\`\`\`
 Test Date: [DATE]
 Tester: [NAME]
 Environment: [DEV/PROD]
@@ -470,13 +470,13 @@ Notes:
 [Any additional observations]
 
 Sign-off: ✓ Ready for deployment / ✗ Not ready
-```
+\`\`\`
 
 ## Continuous Testing
 
 ### Automated Tests to Implement
 
-```typescript
+\`\`\`typescript
 // Login tests
 - test("should login with valid credentials")
 - test("should reject invalid credentials")
@@ -493,7 +493,7 @@ Sign-off: ✓ Ready for deployment / ✗ Not ready
 - test("should handle network errors")
 - test("should show user-friendly error messages")
 - test("should retry failed requests")
-```
+\`\`\`
 
 ## Monitoring & Metrics
 
