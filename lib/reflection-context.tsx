@@ -1,6 +1,6 @@
 "use client"
 
-import { createContext, useContext, useReducer, type ReactNode } from "react"
+import { createContext, useContext, useReducer, useEffect, type ReactNode } from "react"
 import type { AvatarMood } from "@/components/avatar-companion"
 
 export type ReflectionType = "win" | "loss" | "mood" | "insight" | "gratitude" | "challenge"
@@ -125,7 +125,50 @@ const ReflectionContext = createContext<{
 } | null>(null)
 
 export function ReflectionProvider({ children }: { children: ReactNode }) {
-  const [state, dispatch] = useReducer(reflectionReducer, initialState)
+  // Initialize state from localStorage
+  const getInitialState = () => {
+    if (typeof window === 'undefined') return initialState
+    const savedState = localStorage.getItem('lifebook_reflection_state')
+    if (savedState) {
+      try {
+        const parsed = JSON.parse(savedState)
+        // Convert timestamps back to Date objects
+        return {
+          ...parsed,
+          entries: parsed.entries.map((e: any) => ({
+            ...e,
+            createdAt: new Date(e.createdAt),
+          })),
+          moodHistory: parsed.moodHistory.map((m: any) => ({
+            ...m,
+            date: new Date(m.date),
+          })),
+        }
+      } catch (e) {
+        console.log('[v0] Failed to parse reflection state')
+        return initialState
+      }
+    }
+    return initialState
+  }
+
+  const [state, dispatch] = useReducer(reflectionReducer, initialState, getInitialState)
+
+  // Persist state to localStorage whenever it changes
+  useEffect(() => {
+    const stateToSave = {
+      ...state,
+      entries: state.entries.map(e => ({
+        ...e,
+        createdAt: e.createdAt.toISOString(),
+      })),
+      moodHistory: state.moodHistory.map(m => ({
+        ...m,
+        date: m.date.toISOString(),
+      })),
+    }
+    localStorage.setItem('lifebook_reflection_state', JSON.stringify(stateToSave))
+  }, [state])
 
   const generateId = () => Math.random().toString(36).substr(2, 9)
 

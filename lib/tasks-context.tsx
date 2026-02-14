@@ -1,6 +1,6 @@
 "use client"
 
-import { createContext, useContext, useReducer, type ReactNode } from "react"
+import { createContext, useContext, useReducer, useEffect, type ReactNode } from "react"
 import { useLifeCoins } from "./lifecoins-context"
 
 export type TaskDifficulty = "easy" | "medium" | "hard"
@@ -188,8 +188,49 @@ const TasksContext = createContext<{
 } | null>(null)
 
 export function TasksProvider({ children }: { children: ReactNode }) {
-  const [state, dispatch] = useReducer(tasksReducer, initialState)
+  // Initialize state from localStorage
+  const getInitialState = () => {
+    if (typeof window === 'undefined') return initialState
+    const savedState = localStorage.getItem('lifebook_tasks_state')
+    if (savedState) {
+      try {
+        const parsed = JSON.parse(savedState)
+        // Convert timestamps back to Date objects
+        return {
+          ...parsed,
+          tasks: parsed.tasks.map((t: any) => ({
+            ...t,
+            dueDate: t.dueDate ? new Date(t.dueDate) : undefined,
+            createdAt: new Date(t.createdAt),
+            completedAt: t.completedAt ? new Date(t.completedAt) : undefined,
+          })),
+          lastCompletionDate: parsed.lastCompletionDate ? new Date(parsed.lastCompletionDate) : null,
+        }
+      } catch (e) {
+        console.log('[v0] Failed to parse tasks state')
+        return initialState
+      }
+    }
+    return initialState
+  }
+
+  const [state, dispatch] = useReducer(tasksReducer, initialState, getInitialState)
   const { earnCoins, loseCoins, updateStreak, state: lifeCoinsState } = useLifeCoins()
+
+  // Persist state to localStorage whenever it changes
+  useEffect(() => {
+    const stateToSave = {
+      ...state,
+      tasks: state.tasks.map(t => ({
+        ...t,
+        dueDate: t.dueDate?.toISOString(),
+        createdAt: t.createdAt.toISOString(),
+        completedAt: t.completedAt?.toISOString(),
+      })),
+      lastCompletionDate: state.lastCompletionDate?.toISOString(),
+    }
+    localStorage.setItem('lifebook_tasks_state', JSON.stringify(stateToSave))
+  }, [state])
 
   const generateId = () => Math.random().toString(36).substr(2, 9)
 

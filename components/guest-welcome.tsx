@@ -117,30 +117,20 @@ export function GuestWelcome() {
               {isLoading ? 'Starting Adventure...' : 'Start Your Adventure'}
             </Button>
 
-            {/* Divider */}
-            <div className="relative my-6">
-              <div className="absolute inset-0 flex items-center">
-                <div className="w-full border-t border-gray-300" />
+            {/* Info Section */}
+            <div className="mt-6 pt-6 border-t border-primary/10 space-y-3 text-sm text-muted-foreground">
+              <div className="flex items-start gap-2">
+                <span className="text-primary font-bold">✓</span>
+                <span>All your data is saved locally on your device</span>
               </div>
-              <div className="relative flex justify-center text-sm">
-                <span className="px-2 bg-card text-muted-foreground">or create an account</span>
+              <div className="flex items-start gap-2">
+                <span className="text-primary font-bold">✓</span>
+                <span>No sign-up or login required</span>
               </div>
-            </div>
-
-            {/* Auth Links */}
-            <div className="space-y-3">
-              <a
-                href="/auth/sign-up"
-                className="w-full block text-center px-4 py-3 rounded-lg border border-primary/20 hover:bg-primary/5 transition-colors font-medium text-primary"
-              >
-                Create Account
-              </a>
-              <a
-                href="/auth/login"
-                className="w-full block text-center px-4 py-3 rounded-lg hover:bg-gray-100 transition-colors font-medium text-foreground"
-              >
-                Sign In
-              </a>
+              <div className="flex items-start gap-2">
+                <span className="text-primary font-bold">✓</span>
+                <span>Start immediately and begin your adventure</span>
+              </div>
             </div>
           </form>
         </div>
