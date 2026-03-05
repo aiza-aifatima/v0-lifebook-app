@@ -1,20 +1,18 @@
-'use client'
+"use client"
 
-import { useState } from 'react'
-import { AvatarCompanion, type AvatarMood } from '@/components/avatar-companion'
-import { AvatarCustomization } from '@/components/avatar-customization'
-import { AvatarSelection, type AvatarType } from '@/components/avatar-selection'
-import { LifeCoinsDisplay } from '@/components/lifecoins-display'
-import { LifeCoinsActions } from '@/components/lifecoins-actions'
-import { useLifeCoins } from '@/lib/lifecoins-context'
-import { useReflection } from '@/lib/reflection-context'
-import { useBossBattle } from '@/lib/boss-battle-context'
-import { useGuest } from '@/lib/guest-context'
-import { Badge } from '@/components/ui/badge'
-import { Button } from '@/components/ui/button'
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import Link from 'next/link'
-import { LogOut } from 'lucide-react'
+import { useState } from "react"
+import { AvatarCompanion, type AvatarMood } from "@/components/avatar-companion"
+import { AvatarCustomization } from "@/components/avatar-customization"
+import { AvatarSelection, type AvatarType } from "@/components/avatar-selection"
+import { LifeCoinsDisplay } from "@/components/lifecoins-display"
+import { LifeCoinsActions } from "@/components/lifecoins-actions"
+import { useLifeCoins } from "@/lib/lifecoins-context"
+import { useReflection } from "@/lib/reflection-context"
+import { useBossBattle } from "@/lib/boss-battle-context"
+import { Badge } from "@/components/ui/badge"
+import { Button } from "@/components/ui/button"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import Link from "next/link"
 
 // Mock data - in real app this would come from state management/database
 const defaultAvatar: AvatarType = {
@@ -28,7 +26,7 @@ const defaultAvatar: AvatarType = {
 
 export default function Dashboard() {
   const [selectedAvatar, setSelectedAvatar] = useState<AvatarType>(defaultAvatar)
-  const [avatarMood, setAvatarMood] = useState<AvatarMood>('happy')
+  const [avatarMood, setAvatarMood] = useState<AvatarMood>("happy")
   const [avatarLevel, setAvatarLevel] = useState(1)
   const [showCustomization, setShowCustomization] = useState(false)
   const [showAvatarSelection, setShowAvatarSelection] = useState(false)
@@ -36,7 +34,6 @@ export default function Dashboard() {
   const { state: lifeCoinsState, spendCoins } = useLifeCoins()
   const { updateCurrentMood, addMoodSnapshot } = useReflection()
   const { state: bossBattleState } = useBossBattle()
-  const { guest, clearGuest } = useGuest()
 
   const handlePurchase = (item: any) => {
     const success = spendCoins(item.cost, `Purchased ${item.name}`)
@@ -99,40 +96,9 @@ export default function Dashboard() {
     <div className="min-h-screen bg-gradient-to-br from-background via-muted/20 to-secondary/30 p-4">
       <div className="max-w-6xl mx-auto space-y-6">
         {/* Header */}
-        <div className="flex justify-between items-center py-6">
-          <div className="text-center flex-1">
-            <h1 className="font-serif text-3xl font-bold text-foreground mb-2">
-              Welcome, {guest?.guestName}!
-            </h1>
-            <p className="text-muted-foreground">Level up your real life with your companion</p>
-          </div>
-
-          {/* Auth Options - Guest or Sign In */}
-          <div className="flex gap-2">
-            {!guest?.isAuthenticated && (
-              <>
-                <Link href="/auth/sign-up">
-                  <Button variant="outline" size="sm">
-                    Create Account
-                  </Button>
-                </Link>
-                <Link href="/auth/login">
-                  <Button size="sm">Sign In</Button>
-                </Link>
-              </>
-            )}
-            {guest?.isAuthenticated && (
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={() => clearGuest()}
-                className="flex items-center gap-2"
-              >
-                <LogOut className="w-4 h-4" />
-                Sign Out
-              </Button>
-            )}
-          </div>
+        <div className="text-center py-6">
+          <h1 className="font-serif text-3xl font-bold text-foreground mb-2">Your Lifebook Dashboard</h1>
+          <p className="text-muted-foreground">Level up your real life with your companion</p>
         </div>
 
         {/* Avatar Companion Display */}
