@@ -19,6 +19,7 @@ import {
   type ErrorResponse,
 } from '@/lib/auth/error-handler'
 import { ValidationFeedback, PasswordStrengthFeedback } from '@/components/auth/validation-feedback'
+import { GoogleSignIn } from '@/components/auth/google-sign-in'
 
 export default function SignUpPage() {
   const [email, setEmail] = useState('')
@@ -169,6 +170,21 @@ export default function SignUpPage() {
             <CardDescription>Set up your profile and start leveling up</CardDescription>
           </CardHeader>
           <CardContent>
+            {/* Google Sign-in Option */}
+            <div className="mb-6">
+              <GoogleSignIn />
+            </div>
+
+            {/* Divider */}
+            <div className="relative mb-6">
+              <div className="absolute inset-0 flex items-center">
+                <div className="w-full border-t border-gray-300" />
+              </div>
+              <div className="relative flex justify-center text-sm">
+                <span className="px-2 bg-card text-muted-foreground">or continue with email</span>
+              </div>
+            </div>
+
             <form onSubmit={handleSignUp} className="space-y-4">
               {/* Error Alert */}
               <ValidationFeedback error={error} />
