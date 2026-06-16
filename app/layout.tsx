@@ -3,11 +3,6 @@ import type { Metadata } from "next"
 import { Playfair_Display, Source_Sans_3 } from "next/font/google"
 import "./globals.css"
 import { Providers } from "@/components/providers"
-import { GuestProvider } from "@/components/GuestProvider"
-import { LifeCoinsProvider } from "@/components/LifeCoinsProvider"
-import { TasksProvider } from "@/components/TasksProvider"
-import { ReflectionProvider } from "@/components/ReflectionProvider"
-import { BossBattleProvider } from "@/components/BossBattleProvider"
 
 const playfair = Playfair_Display({
   subsets: ["latin"],
