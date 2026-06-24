@@ -117,7 +117,7 @@ Lifebook is a gamified life management application with a secure OTP-based passw
 
 ## 📋 File Structure
 
-```
+\`\`\`
 Lifebook/
 ├── QUICK_START.md                              # 5-min start
 ├── ENV_SETUP.md                                # Environment setup
@@ -150,7 +150,7 @@ Lifebook/
     ├── 002-enable-rls-policies.sql
     ├── 003-seed-avatars-and-data.sql
     └── 005-add-otp-system.sql                 # ✅ New!
-```
+\`\`\`
 
 ---
 

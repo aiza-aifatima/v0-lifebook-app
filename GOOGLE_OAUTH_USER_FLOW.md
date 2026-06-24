@@ -90,7 +90,7 @@ User navigates to `/auth/login` and sees:
 
 ### Example Scenario
 
-```
+\`\`\`
 User has 2 Google accounts:
   1. john.doe@gmail.com
   2. john.doe@company.com
@@ -104,11 +104,11 @@ Later Login (company account):
   → User selects john.doe@company.com
   → Lifebook creates NEW profile for this account
   → Completely separate from gmail account
-```
+\`\`\`
 
 ### Switching Between Accounts
 
-```
+\`\`\`
 To switch accounts mid-session:
   1. Scroll to user menu
   2. Click "Sign Out"
@@ -117,7 +117,7 @@ To switch accounts mid-session:
   5. Google shows account selector
   6. Select different account
   7. Lifebook loads that account's profile
-```
+\`\`\`
 
 ---
 

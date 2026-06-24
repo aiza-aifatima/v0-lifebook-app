@@ -1,10 +1,14 @@
 "use client"
 
 import Link from "next/link"
-import { usePathname } from "next/navigation"
+import { usePathname, useRouter } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { NotificationBell } from "@/components/notifications/notification-bell"
-import { Home, ListTodo, Map, BookHeart, Swords, Users, Sparkles } from "lucide-react"
+import { Home, ListTodo, Map, BookHeart, Swords, Users, Sparkles, LogOut, Download } from "lucide-react"
+import { useGuest } from "@/lib/guest-context"
+import { useLifeCoins } from "@/lib/lifecoins-context"
+import { downloadGuestData } from "@/lib/utils/data-export"
+import { useState } from "react"
 import type { Profile } from "@/lib/types/database"
 
 const avatarImages: Record<string, string> = {
@@ -16,7 +20,7 @@ const avatarImages: Record<string, string> = {
 }
 
 interface AppHeaderProps {
-  profile: Profile
+  profile?: Profile
 }
 
 const navItems = [
@@ -30,6 +34,20 @@ const navItems = [
 
 export function AppHeader({ profile }: AppHeaderProps) {
   const pathname = usePathname()
+  const router = useRouter()
+  const { guest, clearGuest } = useGuest()
+  const { state: lifecoinsState } = useLifeCoins()
+  const [showMenu, setShowMenu] = useState(false)
+
+  const handleLogout = () => {
+    clearGuest()
+    router.push('/')
+  }
+
+  const handleBackup = () => {
+    downloadGuestData()
+    setShowMenu(false)
+  }
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -60,25 +78,58 @@ export function AppHeader({ profile }: AppHeaderProps) {
           <div className="hidden sm:flex items-center gap-3 mr-2 text-sm">
             <span className="flex items-center gap-1">
               <span className="text-amber-500">&#x1FA99;</span>
-              <span className="font-medium">{profile.lifecoins}</span>
+              <span className="font-medium">{lifecoinsState.balance}</span>
             </span>
-            <span className="flex items-center gap-1 text-primary">
-              <span>Lvl</span>
-              <span className="font-medium">{profile.level}</span>
-            </span>
+            {guest && (
+              <span className="flex items-center gap-1 text-muted-foreground text-xs">
+                <span>Guest</span>
+              </span>
+            )}
           </div>
 
-          <NotificationBell userId={profile.id} />
+          {/* Menu Dropdown */}
+          <div className="relative">
+            <button
+              onClick={() => setShowMenu(!showMenu)}
+              className="flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-accent transition-colors"
+              aria-label="Menu"
+            >
+              <div className="w-8 h-8 rounded-full bg-gradient-to-br from-primary to-secondary flex items-center justify-center text-white text-xs font-bold">
+                {guest?.guestName?.charAt(0).toUpperCase() || 'U'}
+              </div>
+              <span className="text-sm font-medium hidden sm:inline">{guest?.guestName || 'Guest'}</span>
+            </button>
 
-          <Link href="/profile">
-            <div className="w-9 h-9 rounded-full overflow-hidden border-2 border-primary/20 hover:border-primary/50 transition-colors">
-              <img
-                src={avatarImages[profile.avatar_id] || avatarImages.harry}
-                alt={profile.display_name}
-                className="w-full h-full object-cover"
-              />
-            </div>
-          </Link>
+            {/* Dropdown Menu */}
+            {showMenu && (
+              <div className="absolute right-0 mt-2 w-48 bg-card border border-primary/10 rounded-lg shadow-lg overflow-hidden z-50">
+                <button
+                  onClick={() => {
+                    router.push('/profile')
+                    setShowMenu(false)
+                  }}
+                  className="w-full text-left px-4 py-2 hover:bg-accent transition-colors text-sm"
+                >
+                  Profile
+                </button>
+                <button
+                  onClick={handleBackup}
+                  className="w-full text-left px-4 py-2 hover:bg-accent transition-colors text-sm flex items-center gap-2"
+                >
+                  <Download className="w-4 h-4" />
+                  Backup Data
+                </button>
+                <div className="border-t border-primary/10" />
+                <button
+                  onClick={handleLogout}
+                  className="w-full text-left px-4 py-2 hover:bg-red-500/10 transition-colors text-sm text-red-600 flex items-center gap-2"
+                >
+                  <LogOut className="w-4 h-4" />
+                  New Session
+                </button>
+              </div>
+            )}
+          </div>
         </div>
       </div>
 

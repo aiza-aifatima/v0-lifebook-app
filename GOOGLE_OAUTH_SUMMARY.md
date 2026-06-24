@@ -38,7 +38,7 @@ A complete streamlined authentication system where users can sign up and log in 
 
 ## Architecture
 
-```
+\`\`\`
 User taps "Sign in with Google"
                 ↓
 GoogleSignIn component calls signInWithGoogle()
@@ -58,14 +58,14 @@ Supabase exchanges code for session token
 User profile created/loaded
                 ↓
 User redirected to /dashboard
-```
+\`\`\`
 
 ---
 
 ## User Flow Timeline
 
 ### Sign-Up (First Time)
-```
+\`\`\`
 Step 1: Navigate to /auth/oauth-signup (2s)
 Step 2: Tap "Sign in with Google" (1s)
 Step 3: Google account selection (5-10s)
@@ -74,10 +74,10 @@ Step 5: Process callback (1-2s)
 Step 6: Load dashboard (1-2s)
 ───────────────────────────────
 Total: 12-20 seconds
-```
+\`\`\`
 
 ### Login (Returning User)
-```
+\`\`\`
 Step 1: Navigate to /auth/login (1s)
 Step 2: Tap "Sign in with Google" (1s)
 Step 3: Account selection (3-5s) - usually cached
@@ -85,7 +85,7 @@ Step 4: Process callback (1s)
 Step 5: Load dashboard (1s)
 ───────────────────────────────
 Total: 7-9 seconds
-```
+\`\`\`
 
 ---
 
@@ -99,7 +99,7 @@ When user taps "Sign in with Google":
 4. System creates separate Lifebook profile per account
 
 **Example:**
-```
+\`\`\`
 Google Accounts on Device:
   → john@gmail.com (Lifebook profile A)
   → john@company.com (Lifebook profile B)
@@ -109,7 +109,7 @@ User selects john@company.com:
   → Loads Profile B for john@company.com
   → Separate from Profile A
   → Completely independent data
-```
+\`\`\`
 
 ---
 
@@ -144,10 +144,10 @@ User selects john@company.com:
 ## Getting Started
 
 ### 1. Quick Setup (5 minutes)
-```bash
+\`\`\`bash
 # Files are already created
 # Just need to configure Google OAuth
-```
+\`\`\`
 
 ### 2. Create Google OAuth Credentials
 - Go to Google Cloud Console
@@ -162,11 +162,11 @@ User selects john@company.com:
 - Update redirect URL
 
 ### 4. Test Locally
-```bash
+\`\`\`bash
 npm run dev
 # Visit http://localhost:3000/auth/oauth-signup
 # Click "Sign in with Google"
-```
+\`\`\`
 
 ### 5. Deploy
 - Update production URLs in Google Console

@@ -38,10 +38,10 @@ Run this checklist before going live to ensure everything is working correctly.
 
 ### .env.local Configuration
 
-```bash
+\`\`\`bash
 # Run this to verify
 cat .env.local
-```
+\`\`\`
 
 Verify these exist and are correctly formatted:
 
@@ -64,7 +64,7 @@ Verify these exist and are correctly formatted:
 
 ### Verification Commands
 
-```bash
+\`\`\`bash
 # Check .env.local exists
 test -f .env.local && echo "✓ .env.local exists" || echo "✗ Missing .env.local"
 
@@ -72,7 +72,7 @@ test -f .env.local && echo "✓ .env.local exists" || echo "✗ Missing .env.loc
 grep "NEXT_PUBLIC_SUPABASE_URL" .env.local && echo "✓ URL set"
 grep "NEXT_PUBLIC_SUPABASE_ANON_KEY" .env.local && echo "✓ Key set"
 grep "NEXT_PUBLIC_DEV_SUPABASE_REDIRECT_URL" .env.local && echo "✓ Redirect set"
-```
+\`\`\`
 
 ---
 
@@ -82,7 +82,7 @@ grep "NEXT_PUBLIC_DEV_SUPABASE_REDIRECT_URL" .env.local && echo "✓ Redirect se
 
 Execute these commands in Supabase SQL Editor:
 
-```sql
+\`\`\`sql
 -- 1. Verify password_reset_otp table exists
 SELECT COUNT(*) FROM information_schema.tables 
 WHERE table_name = 'password_reset_otp';
@@ -102,7 +102,7 @@ WHERE proname IN ('generate_otp_code', 'hash_otp', 'validate_otp', 'cleanup_expi
 SELECT COUNT(*) FROM pg_tables 
 WHERE tablename = 'password_reset_otp' AND rowsecurity = true;
 -- Expected: 1
-```
+\`\`\`
 
 ### Critical Tables
 
@@ -119,14 +119,14 @@ WHERE tablename = 'password_reset_otp' AND rowsecurity = true;
 
 ### Development Server
 
-```bash
+\`\`\`bash
 # Start dev server
 npm run dev
 
 # Verify output
 # ✓ Should see: "✓ Ready in X.Xs"
 # ✓ Should show: "Local: http://localhost:3000"
-```
+\`\`\`
 
 - [x] Server starts without errors
 - [x] No TypeScript errors
@@ -200,10 +200,10 @@ npm run dev
 
 ### Email Delivery Test
 
-```bash
+\`\`\`bash
 # Request password reset for test email
 # Check inbox (not spam/junk)
-```
+\`\`\`
 
 - [x] OTP email arrives in 1-2 minutes
 - [x] Email from address is correct
@@ -218,7 +218,7 @@ npm run dev
 
 ### OTP System Security
 
-```sql
+\`\`\`sql
 -- Verify OTP is hashed
 SELECT otp_hash FROM password_reset_otp LIMIT 1;
 -- Should be SHA-256 hash, not plain number
@@ -226,7 +226,7 @@ SELECT otp_hash FROM password_reset_otp LIMIT 1;
 -- Verify OTP not plain text
 SELECT otp_code FROM password_reset_otp LIMIT 1;
 -- Should be hashed, not readable
-```
+\`\`\`
 
 - [x] OTP never stored in plain text
 - [x] OTP hashed with SHA-256
@@ -465,9 +465,9 @@ After deploying to production:
 
 Use this space for any observations or notes:
 
-```
+\`\`\`
 [Space for additional notes]
-```
+\`\`\`
 
 ---
 

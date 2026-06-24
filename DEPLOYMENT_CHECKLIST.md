@@ -70,11 +70,11 @@
 ## Deployment Steps
 
 ### 1. Add Environment Variables to Vercel
-```
+\`\`\`
 NEXT_PUBLIC_SUPABASE_URL=https://your-project.supabase.co
 NEXT_PUBLIC_SUPABASE_ANON_KEY=your_anon_key_here
 NEXT_PUBLIC_DEV_SUPABASE_REDIRECT_URL=https://your-production-domain.com
-```
+\`\`\`
 
 - [ ] Navigate to Project Settings → Environment Variables
 - [ ] Add each variable
@@ -144,7 +144,7 @@ NEXT_PUBLIC_DEV_SUPABASE_REDIRECT_URL=https://your-production-domain.com
    - Check build logs for errors
 
 2. **Common Issues & Fixes:**
-   ```
+   \`\`\`
    Issue: "NEXT_PUBLIC_SUPABASE_URL is required"
    Fix: Verify environment variables added correctly
    
@@ -153,7 +153,7 @@ NEXT_PUBLIC_DEV_SUPABASE_REDIRECT_URL=https://your-production-domain.com
    
    Issue: Email not sending
    Fix: Check Supabase email configuration and domain auth
-   ```
+   \`\`\`
 
 3. **Revert Deployment:**
    - Go to Deployments page

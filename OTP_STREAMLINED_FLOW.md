@@ -7,7 +7,7 @@ The redesigned OTP password recovery process has been optimized to provide a sea
 ## User Flow Architecture
 
 ### Previous Approach (Multi-Page)
-```
+\`\`\`
 1. User clicks "Forgot Password"
 2. Navigates to /auth/forgot-password
 3. Enters email, requests OTP
@@ -16,10 +16,10 @@ The redesigned OTP password recovery process has been optimized to provide a sea
 6. Enters OTP code
 7. On success, redirects to /auth/reset-password
 8. Enters new password
-```
+\`\`\`
 
 ### New Streamlined Approach (Single Page)
-```
+\`\`\`
 1. User clicks "Forgot Password"
 2. Navigates to /auth/password-recovery
 3. Enters email, requests OTP
@@ -27,7 +27,7 @@ The redesigned OTP password recovery process has been optimized to provide a sea
 5. Enters OTP code (auto-submits on 6 digits)
 6. On success, redirects to /auth/reset-password
 7. Enters new password
-```
+\`\`\`
 
 ## Key Improvements
 
@@ -71,18 +71,18 @@ The redesigned OTP password recovery process has been optimized to provide a sea
 ## Technical Implementation
 
 ### File Location
-```
+\`\`\`
 app/auth/password-recovery/page.tsx
-```
+\`\`\`
 
 ### State Management
 The page uses a three-step state machine:
-```typescript
+\`\`\`typescript
 type Step = 'email' | 'otp' | 'success'
-```
+\`\`\`
 
 ### Component Flow
-```
+\`\`\`
 PasswordRecoveryPage
 ├── Step: 'email'
 │   ├── Email input form
@@ -98,7 +98,7 @@ PasswordRecoveryPage
     ├── Success animation
     ├── Loading indicator
     └── Auto-redirect to reset-password
-```
+\`\`\`
 
 ## User Interactions
 
@@ -254,25 +254,25 @@ PasswordRecoveryPage
 ## Integration Points
 
 ### Login Page
-```
+\`\`\`
 app/auth/login/page.tsx
 Link: href="/auth/password-recovery"
-```
+\`\`\`
 
 ### Password Reset Page
-```
+\`\`\`
 app/auth/reset-password/page.tsx
 Session Data: resetUserId, resetEmail
-```
+\`\`\`
 
 ### OTP Service
-```
+\`\`\`
 lib/auth/otp-service.ts
 Functions:
 - requestPasswordResetOTP()
 - validatePasswordResetOTP()
 - resendPasswordResetOTP()
-```
+\`\`\`
 
 ## Future Enhancements
 

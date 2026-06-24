@@ -74,7 +74,7 @@ This document summarizes all changes made to implement a secure OTP-based passwo
 ### 3. Database Schema Additions
 
 **New Table: `password_reset_otp`**
-```sql
+\`\`\`sql
 - id (UUID, PK)
 - user_id (FK to auth.users)
 - email (indexed)
@@ -83,7 +83,7 @@ This document summarizes all changes made to implement a secure OTP-based passwo
 - attempts (rate limiting)
 - is_used (one-time use)
 - expires_at (10 min window)
-```
+\`\`\`
 
 **PostgreSQL Functions:**
 - `generate_otp_code()` - Secure random generation
@@ -97,7 +97,7 @@ This document summarizes all changes made to implement a secure OTP-based passwo
 
 ### Password Reset Flow
 
-```
+\`\`\`
 ┌─────────────────────────────────────────────────────────┐
 │                   FORGOT PASSWORD PAGE                  │
 │         User enters email → Generate OTP               │
@@ -131,11 +131,11 @@ This document summarizes all changes made to implement a secure OTP-based passwo
 │      Login with new password                           │
 │      Session data cleared                              │
 └─────────────────────────────────────────────────────────┘
-```
+\`\`\`
 
 ### Data Security
 
-```
+\`\`\`
 User Input
     ↓
 [OTP Code: 123456]
@@ -151,7 +151,7 @@ Validation Query
 Compare Hashes (never plain text)
     ↓
 Result: Allowed/Denied
-```
+\`\`\`
 
 ---
 
@@ -187,19 +187,19 @@ Result: Allowed/Denied
 
 ### Required for Development
 
-```env
+\`\`\`env
 NEXT_PUBLIC_SUPABASE_URL=https://your-project.supabase.co
 NEXT_PUBLIC_SUPABASE_ANON_KEY=your_anon_key_here
 NEXT_PUBLIC_DEV_SUPABASE_REDIRECT_URL=http://localhost:3000
-```
+\`\`\`
 
 ### Required for Production
 
-```env
+\`\`\`env
 NEXT_PUBLIC_SUPABASE_URL=https://your-project.supabase.co
 NEXT_PUBLIC_SUPABASE_ANON_KEY=your_anon_key_here
 NEXT_PUBLIC_DEV_SUPABASE_REDIRECT_URL=https://yourdomain.com
-```
+\`\`\`
 
 ---
 

@@ -12,7 +12,7 @@ This guide documents the comprehensive refactor of the login and sign-up authent
 
 The new error handling system maps Supabase and validation errors to user-friendly messages:
 
-```typescript
+\`\`\`typescript
 // Error types handled:
 - Invalid credentials (400)
 - Email not confirmed (400)
@@ -25,7 +25,7 @@ The new error handling system maps Supabase and validation errors to user-friend
 - Network errors
 - Timeout errors
 - Validation errors
-```
+\`\`\`
 
 **Features:**
 - Human-readable error messages without technical jargon
@@ -38,13 +38,13 @@ The new error handling system maps Supabase and validation errors to user-friend
 **Validators included:**
 
 #### Email Validation
-```typescript
+\`\`\`typescript
 validateEmail(email: string): boolean
 // Checks format: name@domain.com
-```
+\`\`\`
 
 #### Password Validation
-```typescript
+\`\`\`typescript
 validatePassword(password: string): {
   valid: boolean
   feedback: string[]
@@ -55,10 +55,10 @@ validatePassword(password: string): {
 // - Lowercase letter
 // - Number
 // - Special character (!@#$%)
-```
+\`\`\`
 
 #### Username Validation
-```typescript
+\`\`\`typescript
 validateUsername(username: string): {
   valid: boolean
   error?: string
@@ -66,7 +66,7 @@ validateUsername(username: string): {
 // Requirements:
 // - 3-30 characters
 // - Only letters, numbers, underscores, hyphens
-```
+\`\`\`
 
 ### 3. Login Page Improvements
 
@@ -82,14 +82,14 @@ validateUsername(username: string): {
 - Mobile-responsive design
 
 #### Error Handling:
-```
+\`\`\`
 Missing email → "Email is required"
 Invalid email → "Please enter a valid email address"
 Missing password → "Password is required"
 Invalid credentials → "Email or password is incorrect. Please try again."
 Session expired → "Your session has expired. Please log in again."
 Network error → "Please check your internet connection and try again."
-```
+\`\`\`
 
 ### 4. Sign-Up Page Improvements
 
@@ -105,17 +105,17 @@ Network error → "Please check your internet connection and try again."
 - Comprehensive error handling
 
 #### Validation Flow:
-```
+\`\`\`
 User inputs → Real-time validation → Visual feedback → Submit enabled/disabled
-```
+\`\`\`
 
 #### Error Messages:
-```
+\`\`\`
 Weak password → "Password must be at least 8 characters..."
 Mismatched passwords → "Passwords don't match"
 Duplicate email → "This email is already registered. Try logging in instead."
 Invalid username → "Only letters, numbers, underscores, and hyphens allowed"
-```
+\`\`\`
 
 ### 5. Validation Feedback Component
 
@@ -123,7 +123,7 @@ Invalid username → "Only letters, numbers, underscores, and hyphens allowed"
 
 Reusable components for consistent error/feedback display:
 
-```typescript
+\`\`\`typescript
 <ValidationFeedback error={error} />
 // Displays error alerts with icons and severity styling
 
@@ -132,7 +132,7 @@ Reusable components for consistent error/feedback display:
 
 <InputFeedback label="..." hint="..." error="..." isValid="..." />
 // Individual field feedback
-```
+\`\`\`
 
 ## User Experience Improvements
 
@@ -166,21 +166,21 @@ All security features have been preserved:
 
 All authentication events are logged with `[v0]` prefix:
 
-```typescript
+\`\`\`typescript
 console.log('[v0] Login attempt started for:', email)
 console.error('[v0] Auth error:', error)
 console.warn('[v0] Network error detected')
-```
+\`\`\`
 
 ### Error Tracking
 
 Use error codes for monitoring:
 
-```typescript
+\`\`\`typescript
 error.code === 'INVALID_CREDENTIALS' // Track failed login attempts
 error.code === 'NETWORK_ERROR' // Track connectivity issues
 error.code === 'USER_ALREADY_EXISTS' // Track duplicate registrations
-```
+\`\`\`
 
 ## Mobile Responsiveness
 

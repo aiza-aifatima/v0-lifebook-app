@@ -28,7 +28,7 @@
 
 ### What You'll See (Step 1: Email Entry)
 
-```
+\`\`\`
 ┌─────────────────────────────────────┐
 │          Lifebook                   │
 │     Level up your real life         │
@@ -49,7 +49,7 @@
 │                                     │
 │ ← Back to Login                    │
 └─────────────────────────────────────┘
-```
+\`\`\`
 
 **Actions:**
 - Type your email address
@@ -58,7 +58,7 @@
 
 ### What You'll See (Step 2: OTP Entry)
 
-```
+\`\`\`
 ┌─────────────────────────────────────┐
 │          Lifebook                   │
 │     Level up your real life         │
@@ -77,7 +77,7 @@
 │ [✓ Verify Code      ]              │
 │ [Resend in 60s] [Change Email]    │
 └─────────────────────────────────────┘
-```
+\`\`\`
 
 **Actions:**
 - Type the 6-digit code from your email
@@ -86,7 +86,7 @@
 
 ### What You'll See (Step 3: Password Reset)
 
-```
+\`\`\`
 ┌─────────────────────────────────────┐
 │          Lifebook                   │
 │     Level up your real life         │
@@ -104,7 +104,7 @@
 │                                     │
 │ [🔐 Reset Password   ]              │
 └─────────────────────────────────────┘
-```
+\`\`\`
 
 **Actions:**
 - Enter a new password (8+ characters)
@@ -213,16 +213,16 @@ A good password:
 - ✓ Unique to this account
 
 **Example of strong password:**
-```
+\`\`\`
 Mz#Butterfly7!Quest2024
-```
+\`\`\`
 
 **Example of weak password:**
-```
+\`\`\`
 123456  (too simple)
 password  (too common)
 Lifebook2024  (predictable)
-```
+\`\`\`
 
 ---
 

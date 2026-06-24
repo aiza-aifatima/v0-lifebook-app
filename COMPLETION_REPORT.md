@@ -493,7 +493,7 @@ For support, refer to comprehensive documentation or contact creator.
 
 ### A. Files Modified Summary
 
-```
+\`\`\`
 Modified Files:          3
 - app/auth/forgot-password/page.tsx
 - app/auth/reset-password/page.tsx
@@ -504,11 +504,11 @@ Created Files:           12
 - lib/auth/otp-service.ts
 - scripts/005-add-otp-system.sql
 - 9 Documentation files
-```
+\`\`\`
 
 ### B. Documentation Files
 
-```
+\`\`\`
 QUICK_START.md                              135 lines
 ENV_SETUP.md                                135 lines
 SETUP_GUIDE.md                              391 lines
@@ -520,7 +520,7 @@ TROUBLESHOOTING.md                          645 lines
 CHANGES_SUMMARY.txt                         399 lines
 README_DOCUMENTATION.md                     347 lines
 COMPLETION_REPORT.md                        450+ lines
-```
+\`\`\`
 
 ### C. Key Features Implemented
 
